@@ -4,9 +4,9 @@ import { House } from "lucide-react";
 
 export const AppSidebarHeader = () => {
   return (
-    <div className="flex h-16 items-center -m-2">
-      <div className="px-4">
-        <House size={18} />
+    <div className="flex h-13 items-center">
+      <div className="px-2">
+        <House size={20} />
       </div>
     </div>
   );

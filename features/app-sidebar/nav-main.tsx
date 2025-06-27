@@ -1,6 +1,6 @@
 "use client";
 
-import { Moon } from "lucide-react";
+import { BotIcon, FilesIcon, SearchIcon, SquarePenIcon } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -13,15 +13,19 @@ export function NavMain() {
     <SidebarGroup>
       <SidebarMenu>
         <SidebarMenuButton tooltip={"Agents"}>
-          <Moon />
+          <SquarePenIcon />
           <span>New Chat</span>
         </SidebarMenuButton>
         <SidebarMenuButton tooltip={"Agents"}>
-          <Moon />
+          <SearchIcon />
+          <span>Search</span>
+        </SidebarMenuButton>
+        <SidebarMenuButton tooltip={"Agents"}>
+          <BotIcon />
           <span>Agents</span>
         </SidebarMenuButton>
         <SidebarMenuButton tooltip={"Library"}>
-          <Moon />
+          <FilesIcon />
           <span>Library</span>
         </SidebarMenuButton>
       </SidebarMenu>
