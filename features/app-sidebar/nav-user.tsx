@@ -55,9 +55,11 @@ export function UserDropdown({ user }: { user: User }) {
                   {user.name.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
+              <div className="grid flex-1 gap-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.loginProvider}</span>
+                <span className="truncate text-xs text-muted-foreground">
+                  {user.loginProvider}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
