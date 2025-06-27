@@ -1,5 +1,5 @@
 import { InterSans } from "./fonts";
-
+import { AppContext } from "./app-context";
 export const AppRoot = (props: React.PropsWithChildren) => {
   const { children } = props;
   return (
@@ -7,7 +7,7 @@ export const AppRoot = (props: React.PropsWithChildren) => {
       <body
         className={`${InterSans.variable} antialiased font-sans thin-scrollbar`}
       >
-        {children}
+        <AppContext>{children}</AppContext>
       </body>
     </html>
   );

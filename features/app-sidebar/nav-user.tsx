@@ -48,7 +48,7 @@ export function UserDropdown({ user }: { user: User }) {
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-full">
+              <Avatar className="size-6 rounded-full">
                 <AvatarImage src={user.image} alt={user.name} />
                 <AvatarFallback className="rounded-full">
                   {user.name.charAt(0).toUpperCase()}
@@ -77,7 +77,9 @@ export function UserDropdown({ user }: { user: User }) {
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    logged in with {user.loginProvider}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
