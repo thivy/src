@@ -1,17 +1,3 @@
-"use client";
-
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react";
 import * as React from "react";
 
 import {
@@ -25,6 +11,8 @@ import { AppSidebarHeader } from "@/features/app-sidebar/app-sidebar-header";
 import { NavMain } from "@/features/app-sidebar/nav-main";
 import { NavProjects } from "@/features/app-sidebar/nav-projects";
 import { NavUser } from "@/features/app-sidebar/nav-user";
+import { Suspense } from "react";
+import { auth } from "../auth";
 
 // This is sample data.
 const data = {
@@ -36,17 +24,14 @@ const data = {
   teams: [
     {
       name: "Acme Inc",
-      logo: GalleryVerticalEnd,
       plan: "Enterprise",
     },
     {
       name: "Acme Corp.",
-      logo: AudioWaveform,
       plan: "Startup",
     },
     {
       name: "Evil Corp.",
-      logo: Command,
       plan: "Free",
     },
   ],
@@ -54,7 +39,6 @@ const data = {
     {
       title: "Playground",
       url: "#",
-      icon: SquareTerminal,
       isActive: true,
       items: [
         {
@@ -74,7 +58,6 @@ const data = {
     {
       title: "Models",
       url: "#",
-      icon: Bot,
       items: [
         {
           title: "Genesis",
@@ -93,7 +76,6 @@ const data = {
     {
       title: "Documentation",
       url: "#",
-      icon: BookOpen,
       items: [
         {
           title: "Introduction",
@@ -116,7 +98,6 @@ const data = {
     {
       title: "Settings",
       url: "#",
-      icon: Settings2,
       items: [
         {
           title: "General",
@@ -141,17 +122,14 @@ const data = {
     {
       name: "Design Engineering",
       url: "#",
-      icon: Frame,
     },
     {
       name: "Sales & Marketing",
       url: "#",
-      icon: PieChart,
     },
     {
       name: "Travel",
       url: "#",
-      icon: Map,
     },
   ],
 };
@@ -167,9 +145,32 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <NavUserWithData />
+        </Suspense>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
 }
+
+const NavUserWithData = async () => {
+  const session = await auth();
+  if (session && session.user) {
+    const { user } = session;
+    return (
+      <NavUser
+        user={{
+          id: user.id,
+          isAdmin: user.isAdmin,
+          loginProvider: user.loginProvider,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        }}
+      />
+    );
+  }
+
+  return <div>Please log in</div>;
+};

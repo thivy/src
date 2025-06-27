@@ -1,6 +1,8 @@
+import { GuardWithAuth } from "@/features/auth/auth-guard";
 import { SidebarAppLayout } from "@/features/root/app-layout";
 import { AppRoot } from "@/features/root/app-root";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +16,11 @@ export default function LandingLayout({
 }>) {
   return (
     <AppRoot>
-      <SidebarAppLayout>{children}</SidebarAppLayout>
+      <Suspense fallback={<div>Authenticating</div>}>
+        <GuardWithAuth>
+          <SidebarAppLayout>{children}</SidebarAppLayout>
+        </GuardWithAuth>
+      </Suspense>
     </AppRoot>
   );
 }
