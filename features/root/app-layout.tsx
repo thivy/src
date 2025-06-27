@@ -33,7 +33,6 @@ export const AppPageHeader = () => {
           orientation="vertical"
           className="mr-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-lg font-thin">Azure Cwwhat</h1>{" "}
         <h1 className="text-lg font-light">Azure Chat</h1>
       </div>
     </header>

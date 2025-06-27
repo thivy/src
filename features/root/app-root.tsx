@@ -1,5 +1,6 @@
-import { InterSans } from "./fonts";
 import { AppContext } from "./app-context";
+import { InterSans } from "./fonts";
+
 export const AppRoot = (props: React.PropsWithChildren) => {
   const { children } = props;
   return (

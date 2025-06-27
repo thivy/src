@@ -22,6 +22,7 @@ import {
 import { User } from "next-auth";
 import { useState, useTransition } from "react";
 import { signOutAndRedirect } from "./actions/nav-actions";
+import { ThemeSwitcher } from "./nav-theme-switcher";
 
 export function UserDropdown({ user }: { user: User }) {
   const { isMobile } = useSidebar();
@@ -91,7 +92,8 @@ export function UserDropdown({ user }: { user: User }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-
+            <ThemeSwitcher />
+            <DropdownMenuSeparator />
             <div className="flex flex-col items-stretch flex-1  ">
               <Button
                 variant={"ghost"}

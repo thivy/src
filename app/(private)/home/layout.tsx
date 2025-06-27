@@ -1,6 +1,5 @@
 import { GuardWithAuth } from "@/features/auth/auth-guard";
 import { SidebarAppLayout } from "@/features/root/app-layout";
-import { AppRoot } from "@/features/root/app-root";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -15,12 +14,10 @@ export default function LandingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AppRoot>
-      <Suspense fallback={<div>Authenticating</div>}>
-        <GuardWithAuth>
-          <SidebarAppLayout>{children}</SidebarAppLayout>
-        </GuardWithAuth>
-      </Suspense>
-    </AppRoot>
+    <Suspense fallback={<div>Authenticating</div>}>
+      <GuardWithAuth>
+        <SidebarAppLayout>{children}</SidebarAppLayout>
+      </GuardWithAuth>
+    </Suspense>
   );
 }
