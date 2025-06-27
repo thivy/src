@@ -10,7 +10,7 @@ import {
 import { AppSidebarHeader } from "@/features/app-sidebar/app-sidebar-header";
 import { NavMain } from "@/features/app-sidebar/nav-main";
 import { NavProjects } from "@/features/app-sidebar/nav-projects";
-import { NavUser } from "@/features/app-sidebar/nav-user";
+import { UserDropdown } from "@/features/app-sidebar/nav-user";
 import { Suspense } from "react";
 import { auth } from "../auth";
 
@@ -146,7 +146,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <Suspense fallback={<div>Loading...</div>}>
-          <NavUserWithData />
+          <NavUser />
         </Suspense>
       </SidebarFooter>
       <SidebarRail />
@@ -154,12 +154,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   );
 }
 
-const NavUserWithData = async () => {
+const NavUser = async () => {
   const session = await auth();
   if (session && session.user) {
     const { user } = session;
     return (
-      <NavUser
+      <UserDropdown
         user={{
           id: user.id,
           isAdmin: user.isAdmin,

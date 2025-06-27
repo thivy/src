@@ -21,9 +21,9 @@ import {
 } from "@/components/ui/sidebar";
 import { User } from "next-auth";
 import { useState, useTransition } from "react";
-import { signOutAndRedirect } from "./nav-action";
+import { signOutAndRedirect } from "./actions/nav-actions";
 
-export function NavUser({ user }: { user: User }) {
+export function UserDropdown({ user }: { user: User }) {
   const { isMobile } = useSidebar();
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
