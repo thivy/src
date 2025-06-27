@@ -11,14 +11,14 @@ import {
 export function NavMain() {
   return (
     <SidebarGroup>
-      <SidebarMenu>
+      <SidebarMenu className="gap-0">
         <SidebarMenuButton tooltip={"Agents"}>
           <SquarePenIcon />
-          <span>New Chat</span>
+          <span>New chat</span>
         </SidebarMenuButton>
         <SidebarMenuButton tooltip={"Agents"}>
           <SearchIcon />
-          <span>Search</span>
+          <span>Search chats</span>
         </SidebarMenuButton>
         <SidebarMenuButton tooltip={"Agents"}>
           <BotIcon />
