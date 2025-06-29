@@ -37,7 +37,7 @@ const Example = () => {
   };
 
   return (
-    <AIInput onSubmit={handleSubmit} className="shadow-lg">
+    <AIInput onSubmit={handleSubmit}>
       <AIInputTextarea
         onChange={(e) => setText(e.target.value)}
         value={text}
