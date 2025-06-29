@@ -87,7 +87,7 @@ function ToggleGroup({
       <ToggleGroupPrimitive.Root
         data-slot="toggle-group"
         className={cn(
-          "flex items-center justify-center gap-1 relative bg-muted p-1 rounded-md",
+          "flex items-center justify-center gap-1 relative bg-muted/65 p-1 rounded-md",
           className
         )}
         {...props}
