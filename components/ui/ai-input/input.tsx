@@ -65,7 +65,7 @@ export type AIInputProps = HTMLAttributes<HTMLFormElement>;
 export const AIInput = ({ className, ...props }: AIInputProps) => (
   <form
     className={cn(
-      "w-full max-w-4xl mx-auto overflow-hidden rounded-2xl border border-border/50 focus-within:border-border bg-input/90 focus-within:bg-input transition-colors duration-200",
+      "w-full max-w-4xl mx-auto overflow-hidden rounded-xl border border-border/30 focus-within:border-border/75 bg-input/90 focus-within:bg-input transition-colors duration-300",
       className
     )}
     {...props}
@@ -99,10 +99,9 @@ export const AIInputTextarea = ({
   return (
     <Textarea
       className={cn(
-        "w-full resize-none rounded-none border-none p-4 shadow-none outline-none ring-0",
+        "w-full resize-none rounded-none border-none p-4 pb-0 shadow-none outline-none ring-0",
         "bg-transparent text-foreground placeholder:text-muted-foreground",
         "focus-visible:ring-0 focus-visible:outline-none",
-        "dark:bg-transparent dark:text-gray-100 dark:placeholder:text-gray-400",
         className
       )}
       name="message"
@@ -145,7 +144,7 @@ export const AIInputButton = ({
       className={cn(
         "shrink-0 gap-1.5 rounded-lg h-9 w-9",
         variant === "ghost" &&
-          "text-muted-foreground hover:text-foreground hover:bg-accent/50",
+          "text-muted-foreground hover:text-foreground dark:hover:bg-accent",
         newSize === "default" && "px-3 w-auto",
         className
       )}
