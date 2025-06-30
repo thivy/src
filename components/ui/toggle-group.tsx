@@ -87,7 +87,7 @@ function ToggleGroup({
       <ToggleGroupPrimitive.Root
         data-slot="toggle-group"
         className={cn(
-          "flex items-center justify-center gap-1 relative bg-muted/65 p-1 rounded-md",
+          "flex items-center justify-center gap-1 relative bg-accent p-1 rounded-md",
           className
         )}
         {...props}
@@ -177,7 +177,7 @@ function ToggleGroupItem({
               exit={{ opacity: 0 }}
               transition={transition}
               className={cn(
-                "absolute inset-0 z-0 rounded-md bg-input",
+                "absolute inset-0 z-0 rounded-md bg-background",
                 activeClassName
               )}
             />

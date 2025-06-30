@@ -67,7 +67,7 @@ export type AIInputProps = HTMLAttributes<HTMLFormElement>;
 export const AIInput = ({ className, ...props }: AIInputProps) => (
   <form
     className={cn(
-      "w-full max-w-4xl mx-auto overflow-hidden rounded-xl border border-border/30 focus-within:border-border/75 bg-input/90 focus-within:bg-input transition-colors duration-300",
+      "w-full overflow-hidden rounded-xl border border-border/50 focus-within:border-border bg-input/90 focus-within:bg-input transition-colors duration-300",
       className
     )}
     {...props}
@@ -102,7 +102,7 @@ export const AIInputTextarea = ({
     <Textarea
       className={cn(
         "w-full resize-none rounded-none border-none p-4 pb-0 shadow-none outline-none ring-0",
-        "bg-transparent text-foreground placeholder:text-muted-foreground",
+        "bg-transparent dark:bg-transparent text-foreground placeholder:text-muted-foreground",
         "focus-visible:ring-0 focus-visible:outline-none",
         className
       )}
@@ -184,7 +184,7 @@ export const AIInputSubmit = ({
   return (
     <Button
       className={cn(
-        "gap-1.5 rounded-full size-9 bg-primary/20 hover:bg-primary/30 border border-primary/20 hover:border-primary/30 text-primary/80",
+        "gap-1.5 rounded-full size-9 bg-primary/80 hover:bg-primary/30 text-input/80 hover:text-primary/80",
         "disabled:bg-primary/30 disabled:text-primary/80 disabled:pointer-events-none",
         className
       )}
@@ -210,8 +210,8 @@ export const AIInputModelSelectTrigger = ({
 }: AIInputModelSelectTriggerProps) => (
   <SelectTrigger
     className={cn(
-      "text-xs border-none bg-transparent font-medium text-muted-foreground shadow-none transition-colors",
-      'dark:hover:bg-accent/50 hover:text-foreground [&[aria-expanded="true"]]:bg-accent [&[aria-expanded="true"]]:text-foreground',
+      "text-xs border-none bg-transparent font-medium text-primary/80 shadow-none transition-colors",
+      'dark:bg-transparent dark:hover:bg-accent hover:text-foreground [&[aria-expanded="true"]]:bg-accent [&[aria-expanded="true"]]:text-foreground',
       className
     )}
     {...props}
