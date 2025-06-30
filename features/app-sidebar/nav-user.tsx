@@ -25,7 +25,7 @@ import { signOutAndRedirect } from "./actions/nav-actions";
 import { ThemeSwitcher } from "./nav-theme-switcher";
 
 export function UserDropdown({ user }: { user: User }) {
-  const { isMobile } = useSidebar();
+  const { isMobile, open } = useSidebar();
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -47,7 +47,7 @@ export function UserDropdown({ user }: { user: User }) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="items-center justify-center data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="size-6 rounded-full">
                 <AvatarImage src={user.image} alt={user.name} />
@@ -55,13 +55,17 @@ export function UserDropdown({ user }: { user: User }) {
                   {user.name.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 gap-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs text-muted-foreground">
-                  {user.loginProvider}
-                </span>
-              </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              {open ? (
+                <>
+                  <div className="grid flex-1 gap-1 text-left text-sm leading-tight ">
+                    <span className="truncate font-medium">{user.name}</span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      {user.loginProvider}
+                    </span>
+                  </div>
+                  <ChevronsUpDown className="ml-auto size-4" />
+                </>
+              ) : null}
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -72,7 +76,7 @@ export function UserDropdown({ user }: { user: User }) {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-full">
+                <Avatar className="size-8 rounded-full">
                   <AvatarImage src={user.image!} alt={user.name!} />
                   <AvatarFallback className="rounded-full">
                     {user.name.charAt(0).toUpperCase()}

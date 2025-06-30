@@ -18,34 +18,29 @@ export const ThemeSwitcher = () => {
   return (
     <DropdownMenuGroup>
       <DropdownMenuLabel className="font-normal">Theme</DropdownMenuLabel>
-      <div>
-        <ToggleGroup type="single" size={"sm"} defaultValue={theme}>
-          <ToggleGroupItem
-            value="dark"
-            aria-label="Toggle dark"
-            onClick={() => handleThemeChange("dark")}
-          >
-            <MoonIcon size={22} />
-            Dark
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value="light"
-            aria-label="Toggle light"
-            onClick={() => handleThemeChange("light")}
-          >
-            <SunIcon size={22} />
-            Light
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value="system"
-            aria-label="Toggle system"
-            onClick={() => handleThemeChange("system")}
-          >
-            <MonitorIcon size={22} />
-            System
-          </ToggleGroupItem>
-        </ToggleGroup>
-      </div>
+      <ToggleGroup type="single" size={"sm"} defaultValue={theme}>
+        <ToggleGroupItem
+          value="dark"
+          aria-label="Toggle dark"
+          onClick={() => handleThemeChange("dark")}
+        >
+          <MoonIcon size={22} />
+        </ToggleGroupItem>
+        <ToggleGroupItem
+          value="light"
+          aria-label="Toggle light"
+          onClick={() => handleThemeChange("light")}
+        >
+          <SunIcon size={22} />
+        </ToggleGroupItem>
+        <ToggleGroupItem
+          value="system"
+          aria-label="Toggle system"
+          onClick={() => handleThemeChange("system")}
+        >
+          <MonitorIcon size={22} />
+        </ToggleGroupItem>
+      </ToggleGroup>
     </DropdownMenuGroup>
   );
 };

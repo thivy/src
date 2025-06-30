@@ -67,7 +67,7 @@ export type AIInputProps = HTMLAttributes<HTMLFormElement>;
 export const AIInput = ({ className, ...props }: AIInputProps) => (
   <form
     className={cn(
-      "w-full backdrop-blur-2xl overflow-hidden rounded-xl border border-border bg-input/90 focus-within:bg-input",
+      "w-full backdrop-blur-2xl overflow-hidden rounded-xl bg-ai-input/90 focus-within:bg-ai-input",
       className
     )}
     {...props}
@@ -210,8 +210,8 @@ export const AIInputModelSelectTrigger = ({
 }: AIInputModelSelectTriggerProps) => (
   <SelectTrigger
     className={cn(
-      "text-xs border-none bg-transparent font-medium text-primary/80 shadow-none transition-colors",
-      'dark:bg-transparent dark:hover:bg-accent hover:text-foreground [&[aria-expanded="true"]]:bg-accent [&[aria-expanded="true"]]:text-foreground',
+      "text-xs border-none bg-transparent font-medium shadow-none transition-colors",
+      'hover:bg-accent [&[aria-expanded="true"]]:bg-accent',
       className
     )}
     {...props}

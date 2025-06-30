@@ -48,39 +48,46 @@
 }
 
 .dark {
-  --background: oklch(0.194 0.001 17.3);
-  --foreground: oklch(0.85 0.001 17.3);
+  --background: oklch(0.248 0 0);
+  --foreground: oklch(0.754 0 0);
+
   --card: oklch(0.2134 0 0);
   --card-foreground: oklch(0.9851 0 0);
-  --popover: oklch(0.195 0.001 17.3);
-  --popover-foreground: oklch(0.785 0.001 17.3);
+  --popover: oklch(0.398 0 0);
+  --popover-foreground: oklch(0.754 0 0);
+
   --primary: oklch(0.9851 0 0);
   --primary-foreground: oklch(0.9851 0 0);
   --secondary: oklch(0.2686 0 0);
   --secondary-foreground: oklch(0.9851 0 0);
   --muted: oklch(0.255 0.001 17.3);
   --muted-foreground: oklch(0.546 0.002 17.3);
-  --accent: oklch(0.255 0.001 17.3);
+  --accent: oklch(0.451 0 0);
   --accent-foreground: oklch(0.9851 0 0);
+
   --destructive: oklch(0.7022 0.1892 22.2279);
   --destructive-foreground: oklch(0.2686 0 0);
-  --border: oklch(0.267 0.002 17.3);
-  --input: oklch(0.223 0.001 17.3);
-  --ring: oklch(0.5555 0 0);
+
+  --border: oklch(0.354 0 0);
+
+  --input: oklch(0.379 0 0);
+  --ai-input: oklch(0.321 0 0);
+  --ring: oklch(0.754 0 0);
+
   --chart-1: oklch(0.5555 0 0);
   --chart-2: oklch(0.5555 0 0);
   --chart-3: oklch(0.5555 0 0);
   --chart-4: oklch(0.5555 0 0);
   --chart-5: oklch(0.5555 0 0);
 
-  --sidebar: oklch(0.203 0.001 17.3);
-  --sidebar-foreground: oklch(0.785 0.001 17.3);
+  --sidebar: oklch(0.285 0 0);
+  --sidebar-foreground: oklch(0.754 0 0);
   --sidebar-primary: oklch(0.9851 0 0);
   --sidebar-primary-foreground: oklch(0.203 0.001 17.3);
-  --sidebar-accent: oklch(0.255 0.001 17.3);
-  --sidebar-accent-foreground: oklch(0.9851 0 0);
-  --sidebar-border: oklch(0.328 0.001 17.3);
-  --sidebar-ring: oklch(0.4386 0 0);
+  --sidebar-accent: oklch(0.321 0 0);
+  --sidebar-accent-foreground: oklch(0.9 0 0);
+  --sidebar-border: oklch(0.379 0 0);
+  --sidebar-ring: oklch(0.754 0 0);
 }
 
 @theme inline {
@@ -119,6 +126,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --height-header: calc(var(--spacing) * 13);
+  --color-ai-input: var(--ai-input);
 }
 
 @layer base {
