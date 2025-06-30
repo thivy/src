@@ -2,6 +2,11 @@
 import {
   AIInput,
   AIInputButton,
+  AIInputModelSelect,
+  AIInputModelSelectContent,
+  AIInputModelSelectItem,
+  AIInputModelSelectTrigger,
+  AIInputModelSelectValue,
   AIInputSubmit,
   AIInputTextarea,
   AIInputToolbar,
@@ -16,6 +21,19 @@ import {
   SearchIcon,
 } from "lucide-react";
 import { type FormEventHandler, useState } from "react";
+
+const models = [
+  { id: "gpt-4", name: "GPT-4" },
+  { id: "gpt-3.5-turbo", name: "GPT-3.5 Turbo" },
+  { id: "claude-2", name: "Claude 2" },
+  { id: "claude-instant", name: "Claude Instant" },
+  { id: "palm-2", name: "PaLM 2" },
+  { id: "llama-2-70b", name: "Llama 2 70B" },
+  { id: "llama-2-13b", name: "Llama 2 13B" },
+  { id: "cohere-command", name: "Command" },
+  { id: "mistral-7b", name: "Mistral 7B" },
+];
+
 const Example = () => {
   const [text, setText] = useState<string>("");
   const [status, setStatus] = useState<
@@ -35,6 +53,7 @@ const Example = () => {
       setStatus("ready");
     }, 2000);
   };
+  const [model, setModel] = useState<string>(models[0].id);
 
   return (
     <AIInput onSubmit={handleSubmit}>
@@ -48,6 +67,18 @@ const Example = () => {
           <AIInputButton>
             <SearchIcon size={16} />
           </AIInputButton>
+          <AIInputModelSelect onValueChange={setModel} value={model}>
+            <AIInputModelSelectTrigger>
+              <AIInputModelSelectValue />
+            </AIInputModelSelectTrigger>
+            <AIInputModelSelectContent>
+              {models.map((model) => (
+                <AIInputModelSelectItem key={model.id} value={model.id}>
+                  {model.name}
+                </AIInputModelSelectItem>
+              ))}
+            </AIInputModelSelectContent>
+          </AIInputModelSelect>
           <AIInputButton>
             <PaperclipIcon size={16} />
           </AIInputButton>
@@ -55,17 +86,18 @@ const Example = () => {
             <MapPinIcon size={16} />
           </AIInputButton>
         </AIInputTools>
-        <div className="flex items-center gap-1">
+        <AIInputTools>
           <AIInputButton>
             <ImageIcon size={16} />
           </AIInputButton>
           <AIInputButton>
             <MicIcon size={16} />
           </AIInputButton>
+
           <AIInputSubmit disabled={!text} status={status}>
             <ArrowUpIcon size={22} />
           </AIInputSubmit>
-        </div>
+        </AIInputTools>
       </AIInputToolbar>
     </AIInput>
   );

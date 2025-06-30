@@ -20,6 +20,7 @@ type UseAutoResizeTextareaProps = {
   minHeight: number;
   maxHeight?: number;
 };
+
 const useAutoResizeTextarea = ({
   minHeight,
   maxHeight,
@@ -61,6 +62,7 @@ const useAutoResizeTextarea = ({
   }, [adjustHeight]);
   return { textareaRef, adjustHeight };
 };
+
 export type AIInputProps = HTMLAttributes<HTMLFormElement>;
 export const AIInput = ({ className, ...props }: AIInputProps) => (
   <form
@@ -78,7 +80,7 @@ export type AIInputTextareaProps = ComponentProps<typeof Textarea> & {
 export const AIInputTextarea = ({
   onChange,
   className,
-  placeholder = "What would you like to know?",
+  placeholder = "",
   minHeight = 48,
   maxHeight = 164,
   ...props
@@ -104,6 +106,10 @@ export const AIInputTextarea = ({
         "focus-visible:ring-0 focus-visible:outline-none",
         className
       )}
+      autoComplete="off"
+      autoCorrect="off"
+      autoFocus
+      spellCheck="false"
       name="message"
       onChange={(e) => {
         adjustHeight();
@@ -128,7 +134,7 @@ export const AIInputToolbar = ({
 );
 export type AIInputToolsProps = HTMLAttributes<HTMLDivElement>;
 export const AIInputTools = ({ className, ...props }: AIInputToolsProps) => (
-  <div className={cn("flex items-center gap-2", className)} {...props} />
+  <div className={cn("flex items-center gap-1", className)} {...props} />
 );
 export type AIInputButtonProps = ComponentProps<typeof Button>;
 export const AIInputButton = ({
@@ -142,9 +148,10 @@ export const AIInputButton = ({
   return (
     <Button
       className={cn(
-        "shrink-0 gap-1.5 rounded-lg h-9 w-9",
+        "shrink-0 gap-1.5 rounded-lg size-9",
         variant === "ghost" &&
-          "text-muted-foreground hover:text-foreground dark:hover:bg-accent",
+          "text-foreground hover:text-foreground dark:hover:bg-accent",
+        "disabled:text-muted-foreground",
         newSize === "default" && "px-3 w-auto",
         className
       )}
@@ -177,7 +184,7 @@ export const AIInputSubmit = ({
   return (
     <Button
       className={cn(
-        "gap-1.5 rounded-full size-9  hover:bg-primary border border-border text-primary-foreground",
+        "gap-1.5 rounded-full size-9 bg-primary/20 hover:bg-primary/30 border border-primary/20 hover:border-primary/30 text-primary/80",
         "disabled:bg-primary/30 disabled:text-primary/80 disabled:pointer-events-none",
         className
       )}
@@ -203,8 +210,8 @@ export const AIInputModelSelectTrigger = ({
 }: AIInputModelSelectTriggerProps) => (
   <SelectTrigger
     className={cn(
-      "border-none bg-transparent font-medium text-muted-foreground shadow-none transition-colors",
-      'hover:bg-accent hover:text-foreground [&[aria-expanded="true"]]:bg-accent [&[aria-expanded="true"]]:text-foreground',
+      "text-xs border-none bg-transparent font-medium text-muted-foreground shadow-none transition-colors",
+      'dark:hover:bg-accent/50 hover:text-foreground [&[aria-expanded="true"]]:bg-accent [&[aria-expanded="true"]]:text-foreground',
       className
     )}
     {...props}
