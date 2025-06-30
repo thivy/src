@@ -16,10 +16,7 @@ export const SidebarAppLayout = (props: React.PropsWithChildren) => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
-        <AppPageHeader />
-        {children}
-      </SidebarInset>
+      <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
   );
 };

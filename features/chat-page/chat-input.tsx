@@ -56,7 +56,7 @@ const ChatInput = () => {
   const [model, setModel] = useState<string>(models[0].id);
 
   return (
-    <div className="absolute bottom-0 left-0 w-full p-4">
+    <div className="absolute bottom-0 left-0 w-full py-2 px-2">
       <div className="container max-w-3xl mx-auto">
         <AIInput onSubmit={handleSubmit}>
           <AIInputTextarea
