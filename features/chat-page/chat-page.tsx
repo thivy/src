@@ -5,13 +5,9 @@ import {
   AIConversationContent,
   AIConversationScrollButton,
 } from "@/components/ai/conversation";
-import { AIMessage, AIMessageAvatar } from "@/components/ai/message";
+import { AIMessage, AIMessageContent } from "@/components/ai/message";
 import { AIResponse } from "@/components/ai/response";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { AppPageHeader } from "../root/app-layout";
 import ChatInput from "./chat-input";
 
@@ -125,12 +121,6 @@ const messages: {
   },
   {
     from: "assistant",
-    content: "I am fine, thank you!",
-    avatar: "https://github.com/openai.png",
-    name: "OpenAI",
-  },
-  {
-    from: "user",
     content: `
     # React Hooks Best Practices
 React hooks are a powerful feature that let you use state and other React features without writing classes. Here are some tips for using them effectively:
@@ -166,7 +156,9 @@ Would you like me to explain any specific hook in more detail?
   },
   {
     from: "assistant",
-    content: "The weather in Tokyo is sunny.",
+    content: `
+    
+    `,
     avatar: "https://github.com/openai.png",
     name: "OpenAI",
   },
@@ -178,18 +170,20 @@ const Example = () => {
       className="flex h-screen overflow-hidden gap-2"
       direction="horizontal"
     >
-      <ResizablePanel className="relative flex-1 min-w-96 h-screen flex flex-col">
-        <AIConversation className="relative size-full ">
-          <AIConversationContent className="">
+      <ResizablePanel className="relative flex-1 min-w-[530px] h-screen flex flex-col">
+        <AIConversation>
+          <AIConversationContent>
             <AppPageHeader />
             {messages.map(({ content, ...message }, index) => (
               <AIMessage
                 from={message.from}
                 key={index}
-                className="container max-w-[calc(var(--container-3xl)-30px)] mx-auto "
+                className="container max-w-3xl mawx-w-[calc(var(--container-3xl)-10px)] mx-auto "
               >
-                <AIResponse>{content}</AIResponse>
-                <AIMessageAvatar name={message.name} src={message.avatar} />
+                <AIMessageContent>
+                  <AIResponse>{content}</AIResponse>
+                </AIMessageContent>
+                {/* <AIMessageAvatar name={message.name} src={message.avatar} /> */}
               </AIMessage>
             ))}
           </AIConversationContent>
@@ -197,14 +191,14 @@ const Example = () => {
         </AIConversation>
         <ChatInput />
       </ResizablePanel>
-      <ResizableHandle withHandle />
+      {/* <ResizableHandle withHandle />
       <ResizablePanel className="min-w-96 h-full p-2 pl-0 max-h-svw overflow-hidden">
         <div className="relative flex-1 h-full bg-sidebar border-border border rounded-xl">
           <div className="inset-0 flex items-center justify-center h-full">
             Canvas Area
           </div>
         </div>
-      </ResizablePanel>
+      </ResizablePanel> */}
     </ResizablePanelGroup>
   );
 };

@@ -270,7 +270,7 @@ const highlight = (
     lang: language ?? "typescript",
     themes: themes ?? {
       light: "github-light",
-      dark: "github-dark-default",
+      dark: "slack-dark",
     },
     transformers: [
       transformerNotationDiff({
@@ -348,7 +348,7 @@ export const CodeBlockHeader = ({
 }: CodeBlockHeaderProps) => (
   <div
     className={cn(
-      "flex flex-row items-center border-b bg-secondary p-1",
+      "flex flex-row items-center border-b bg-input p-1",
       className
     )}
     {...props}
@@ -410,7 +410,7 @@ export const CodeBlockFilename = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-2 bg-secondary px-4 py-1.5 text-muted-foreground text-xs",
+        "flex items-center gap-2 px-4 py-1.5 text-muted-foreground text-xs",
         className
       )}
       {...props}

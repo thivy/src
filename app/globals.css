@@ -6,6 +6,10 @@
   scrollbar-color: var(--muted-foreground) transparent;
 }
 
+.scrollbar-gutter-stable {
+  scrollbar-gutter: stable both-edges;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

@@ -57,7 +57,7 @@ const ChatInput = () => {
 
   return (
     <div className="pb-2 ">
-      <div className="container max-w-3xl mx-auto ">
+      <div className="container max-w-3xl mx-auto w-full ">
         <AIInput onSubmit={handleSubmit}>
           <AIInputTextarea
             onChange={(e) => setText(e.target.value)}
