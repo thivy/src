@@ -182,7 +182,7 @@ const Example = () => {
               <AIMessage
                 from={message.from}
                 key={index}
-                className="container max-w-3xl mawx-w-[calc(var(--container-3xl)-10px)] mx-auto "
+                className="container max-w-3xl mx-auto "
               >
                 <AIMessageContent>
                   <AIResponse>{content}</AIResponse>
