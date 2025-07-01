@@ -26,7 +26,7 @@ const toggleVariants = cva(
       },
       size: {
         default: "h-9 px-2 min-w-9",
-        sm: "h-7 text-xs",
+        sm: "h-8 text-xs",
         lg: "h-10 px-2.5 min-w-10",
       },
     },
@@ -87,7 +87,7 @@ function ToggleGroup({
       <ToggleGroupPrimitive.Root
         data-slot="toggle-group"
         className={cn(
-          "flex gap-1 items-center justify-center relative bg-input p-0.5 rounded-md",
+          "flex gap-1 items-center justify-center relative bg-input p-1 rounded-md",
           className
         )}
         {...props}

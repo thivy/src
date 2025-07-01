@@ -3,7 +3,6 @@
 import { BadgeCheck, ChevronsUpDown, Loader2, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,7 +28,8 @@ export function UserDropdown({ user }: { user: User }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  const handleSignOut = () => {
+  const handleSignOut = (e: Event) => {
+    e.preventDefault();
     startTransition(async () => {
       await signOutAndRedirect();
     });
@@ -84,7 +84,7 @@ export function UserDropdown({ user }: { user: User }) {
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs text-muted-foreground">
+                  <span className="truncate text-xs">
                     logged in with {user.loginProvider}
                   </span>
                 </div>
@@ -96,18 +96,7 @@ export function UserDropdown({ user }: { user: User }) {
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <ThemeSwitcher />
-            <DropdownMenuSeparator />
-            <div className="flex flex-col items-stretch flex-1  ">
-              <Button
-                variant={"ghost"}
-                size={"sm"}
-                onClick={handleSignOut}
-                disabled={isPending}
-                className="font-normal justify-start "
-              >
+              <DropdownMenuItem onSelect={handleSignOut} disabled={isPending}>
                 {isPending ? (
                   <>
                     <Loader2 className="animate-spin text-muted-foreground" />
@@ -119,8 +108,10 @@ export function UserDropdown({ user }: { user: User }) {
                     Sign out
                   </>
                 )}
-              </Button>
-            </div>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <ThemeSwitcher />
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
