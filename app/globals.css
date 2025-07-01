@@ -10,6 +10,10 @@
   scrollbar-gutter: stable;
 }
 
+.scrollbar-gutter-auto {
+  scrollbar-gutter: auto;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

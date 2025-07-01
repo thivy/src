@@ -6,7 +6,7 @@ export const AppRoot = (props: React.PropsWithChildren) => {
   return (
     <html lang="en">
       <body
-        className={`${InterSans.variable} antialiased font-sans thin-scrollbar`}
+        className={`${InterSans.variable} antialiased font-sans thin-scrollbar overflow-hidden`}
       >
         <AppContext>{children}</AppContext>
       </body>

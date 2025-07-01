@@ -174,7 +174,7 @@ const Example = () => {
       className="flex h-screen overflow-hidden gap-2"
       direction="horizontal"
     >
-      <ResizablePanel className="relative flex-1 min-w-[530px] h-screen flex flex-col">
+      <ResizablePanel className="relative flex-1 min-w-[530px] h-screen flex flex-col @container">
         <AIConversation>
           <AIConversationContent className="@container">
             <AppPageHeader />
@@ -187,7 +187,6 @@ const Example = () => {
                 <AIMessageContent>
                   <AIResponse>{content}</AIResponse>
                 </AIMessageContent>
-                {/* <AIMessageAvatar name={message.name} src={message.avatar} /> */}
               </AIMessage>
             ))}
           </AIConversationContent>
@@ -196,11 +195,10 @@ const Example = () => {
         <ChatInput />
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel className="min-w-96 h-full p-2 pl-0 max-h-svw overflow-hidden">
-        <div className="relative flex-1 h-full bg-sidebar border-border border rounded-xl">
-          <div className="inset-0 flex items-center justify-center h-full">
-            Canvas Area
-          </div>
+      <ResizablePanel className="min-w-96 h-full max-h-svw overflow-hidden px-2">
+        <AppPageHeader />
+        <div className="inset-0 flex items-center justify-center h-full">
+          Artifact Area
         </div>
       </ResizablePanel>
     </ResizablePanelGroup>
