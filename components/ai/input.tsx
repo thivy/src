@@ -9,7 +9,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowUpIcon, Loader2Icon, SquareIcon, XIcon } from "lucide-react";
+import {
+  ArrowUp02Icon,
+  Cancel01Icon,
+  Loading03Icon,
+  StopIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import type {
   ComponentProps,
   HTMLAttributes,
@@ -173,13 +179,19 @@ export const AIInputSubmit = ({
   children,
   ...props
 }: AIInputSubmitProps) => {
-  let Icon = <ArrowUpIcon />;
+  let Icon = <HugeiconsIcon icon={ArrowUp02Icon} strokeWidth={1.5} />;
   if (status === "submitted") {
-    Icon = <Loader2Icon className="animate-spin" />;
+    Icon = (
+      <HugeiconsIcon
+        icon={Loading03Icon}
+        strokeWidth={1.5}
+        className="animate-spin"
+      />
+    );
   } else if (status === "streaming") {
-    Icon = <SquareIcon />;
+    Icon = <HugeiconsIcon icon={StopIcon} strokeWidth={1.5} />;
   } else if (status === "error") {
-    Icon = <XIcon />;
+    Icon = <HugeiconsIcon icon={Cancel01Icon} strokeWidth={1.5} />;
   }
   return (
     <Button

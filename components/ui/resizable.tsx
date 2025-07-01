@@ -1,10 +1,11 @@
 "use client";
 
-import { GripVerticalIcon } from "lucide-react";
 import * as React from "react";
 import * as ResizablePrimitive from "react-resizable-panels";
 
 import { cn } from "@/components/lib/utils";
+import { DragDropVerticalIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 function ResizablePanelGroup({
   className,
@@ -46,7 +47,7 @@ function ResizableHandle({
     >
       {withHandle && (
         <div className="bg-border z-10 flex h-4 w-3 items-center justify-center rounded-xs border">
-          <GripVerticalIcon className="size-2.5" />
+          <HugeiconsIcon icon={DragDropVerticalIcon} />
         </div>
       )}
     </ResizablePrimitive.PanelResizeHandle>

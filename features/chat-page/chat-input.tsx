@@ -14,7 +14,6 @@ import {
 } from "@/components/ai/input";
 import { Image02Icon, Mic02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowUpIcon } from "lucide-react";
 import { type FormEventHandler, useState } from "react";
 
 const models = [
@@ -82,9 +81,7 @@ const ChatInput = () => {
                 <HugeiconsIcon strokeWidth={1.5} icon={Mic02Icon} />
               </AIInputButton>
 
-              <AIInputSubmit disabled={!text} status={status}>
-                <ArrowUpIcon size={22} />
-              </AIInputSubmit>
+              <AIInputSubmit disabled={!text} status={status} />
             </AIInputTools>
           </AIInputToolbar>
         </AIInput>

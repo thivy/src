@@ -9,6 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
   type IconType,
   SiAstro,
@@ -88,7 +90,6 @@ import {
   transformerNotationHighlight,
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
-import { CheckIcon, CopyIcon } from "lucide-react";
 import type {
   ComponentProps,
   HTMLAttributes,
@@ -513,7 +514,11 @@ export const CodeBlockCopyButton = ({
     });
   }
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
+  const Icon: ReactNode = isCopied ? (
+    <HugeiconsIcon icon={Tick02Icon} />
+  ) : (
+    <HugeiconsIcon icon={Copy01Icon} />
+  );
 
   return (
     <Button
@@ -523,7 +528,7 @@ export const CodeBlockCopyButton = ({
       variant="ghost"
       {...props}
     >
-      {children ?? <Icon className="text-muted-foreground" size={14} />}
+      {children ?? Icon}
     </Button>
   );
 };

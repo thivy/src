@@ -18,5 +18,5 @@
     "hooks": "@/components/hooks",
     "features": "@/features"
   },
-  "iconLibrary": "lucide"
+  "iconLibrary": "HugeiconsIcon"
 }
