@@ -47,7 +47,7 @@ export const AIConversationScrollButton = () => {
         onClick={handleScrollToBottom}
         size="icon"
         type="button"
-        variant="outline"
+        variant="default"
       >
         <ArrowDownIcon className="size-4" />
       </Button>

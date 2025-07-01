@@ -184,7 +184,7 @@ export const AIInputSubmit = ({
   return (
     <Button
       className={cn(
-        "gap-1.5 rounded-full size-9 bg-primary/80 hover:bg-primary/30 text-input/80 hover:text-primary/80",
+        "gap-1.5 rounded-full size-9 bg-primary/80 hover:bg-primary/60 text-input/80 ",
         "disabled:bg-primary/30 disabled:text-primary/80 disabled:pointer-events-none",
         className
       )}

@@ -99,12 +99,12 @@ export function UserDropdown({ user }: { user: User }) {
               <DropdownMenuItem onSelect={handleSignOut} disabled={isPending}>
                 {isPending ? (
                   <>
-                    <Loader2 className="animate-spin text-muted-foreground" />
+                    <Loader2 className="animate-spin" />
                     Signing out...
                   </>
                 ) : (
                   <>
-                    <LogOut className="text-muted-foreground" />
+                    <LogOut />
                     Sign out
                   </>
                 )}
