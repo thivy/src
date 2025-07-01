@@ -7,7 +7,6 @@ import {
   type BundledLanguage,
   CodeBlock,
   CodeBlockBody,
-  CodeBlockContent,
   CodeBlockCopyButton,
   CodeBlockFilename,
   CodeBlockFiles,
@@ -150,9 +149,11 @@ const components: Options["components"] = {
         <CodeBlockBody>
           {(item) => (
             <CodeBlockItem key={item.language} value={item.language}>
-              <CodeBlockContent language={item.language as BundledLanguage}>
+              <CodeBlockContentAsync
+                language={item.language as BundledLanguage}
+              >
                 {item.code}
-              </CodeBlockContent>
+              </CodeBlockContentAsync>
             </CodeBlockItem>
           )}
         </CodeBlockBody>
@@ -160,6 +161,17 @@ const components: Options["components"] = {
     );
   },
 };
+
+const CodeBlockContentAsync = dynamic(
+  async () => {
+    const comp = await import("./code-block");
+    return comp.CodeBlockContent;
+  },
+  {
+    loading: () => <p>...</p>,
+    ssr: false,
+  }
+);
 
 const MarkdownAsync = dynamic(
   async () => {

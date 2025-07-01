@@ -12,14 +12,9 @@ import {
   AIInputToolbar,
   AIInputTools,
 } from "@/components/ai/input";
-import {
-  ArrowUpIcon,
-  ImageIcon,
-  MapPinIcon,
-  MicIcon,
-  PaperclipIcon,
-  SearchIcon,
-} from "lucide-react";
+import { Image02Icon, Mic02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowUpIcon } from "lucide-react";
 import { type FormEventHandler, useState } from "react";
 
 const models = [
@@ -66,9 +61,6 @@ const ChatInput = () => {
           />
           <AIInputToolbar>
             <AIInputTools>
-              <AIInputButton>
-                <SearchIcon size={16} />
-              </AIInputButton>
               <AIInputModelSelect onValueChange={setModel} value={model}>
                 <AIInputModelSelectTrigger>
                   <AIInputModelSelectValue />
@@ -81,19 +73,13 @@ const ChatInput = () => {
                   ))}
                 </AIInputModelSelectContent>
               </AIInputModelSelect>
-              <AIInputButton>
-                <PaperclipIcon size={16} />
-              </AIInputButton>
-              <AIInputButton>
-                <MapPinIcon size={16} />
-              </AIInputButton>
             </AIInputTools>
             <AIInputTools>
               <AIInputButton>
-                <ImageIcon size={16} />
+                <HugeiconsIcon strokeWidth={1.5} icon={Image02Icon} />
               </AIInputButton>
               <AIInputButton>
-                <MicIcon size={16} />
+                <HugeiconsIcon strokeWidth={1.5} icon={Mic02Icon} />
               </AIInputButton>
 
               <AIInputSubmit disabled={!text} status={status}>

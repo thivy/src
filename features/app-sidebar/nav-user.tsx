@@ -1,7 +1,5 @@
 "use client";
 
-import { BadgeCheck, ChevronsUpDown, Loader2, LogOut } from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -18,6 +16,13 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import {
+  Loading03Icon,
+  Logout05Icon,
+  UnfoldMoreIcon,
+  UserIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { User } from "next-auth";
 import { useState, useTransition } from "react";
 import { signOutAndRedirect } from "./actions/nav-actions";
@@ -63,7 +68,7 @@ export function UserDropdown({ user }: { user: User }) {
                       {user.loginProvider}
                     </span>
                   </div>
-                  <ChevronsUpDown className="ml-auto size-4" />
+                  <HugeiconsIcon icon={UnfoldMoreIcon} />
                 </>
               ) : null}
             </SidebarMenuButton>
@@ -93,18 +98,18 @@ export function UserDropdown({ user }: { user: User }) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <BadgeCheck />
+                <HugeiconsIcon icon={UserIcon} strokeWidth={1.5} />
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem onSelect={handleSignOut} disabled={isPending}>
                 {isPending ? (
                   <>
-                    <Loader2 className="animate-spin" />
+                    <HugeiconsIcon icon={Loading03Icon} strokeWidth={1.5} />
                     Signing out...
                   </>
                 ) : (
                   <>
-                    <LogOut />
+                    <HugeiconsIcon strokeWidth={1.5} icon={Logout05Icon} />
                     Sign out
                   </>
                 )}
