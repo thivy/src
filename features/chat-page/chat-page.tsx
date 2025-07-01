@@ -7,7 +7,11 @@ import {
 } from "@/components/ai/conversation";
 import { AIMessage, AIMessageContent } from "@/components/ai/message";
 import { AIResponse } from "@/components/ai/response";
-import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import { AppPageHeader } from "../root/app-layout";
 import ChatInput from "./chat-input";
 
@@ -191,14 +195,14 @@ const Example = () => {
         </AIConversation>
         <ChatInput />
       </ResizablePanel>
-      {/* <ResizableHandle withHandle />
+      <ResizableHandle withHandle />
       <ResizablePanel className="min-w-96 h-full p-2 pl-0 max-h-svw overflow-hidden">
         <div className="relative flex-1 h-full bg-sidebar border-border border rounded-xl">
           <div className="inset-0 flex items-center justify-center h-full">
             Canvas Area
           </div>
         </div>
-      </ResizablePanel> */}
+      </ResizablePanel>
     </ResizablePanelGroup>
   );
 };
