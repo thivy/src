@@ -1,9 +1,10 @@
 "use client";
+import dynamic from "next/dynamic";
 
 import { cn } from "@/components/lib/utils";
 import type { HTMLAttributes } from "react";
 import { memo } from "react";
-import ReactMarkdown, { type Options } from "react-markdown";
+import { type Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   type BundledLanguage,
@@ -168,6 +169,17 @@ const components: Options["components"] = {
   },
 };
 
+const MarkdownAsync = dynamic(
+  async () => {
+    const comp = await import("react-markdown");
+    return comp.default;
+  },
+  {
+    loading: () => <p>...</p>,
+    ssr: false,
+  }
+);
+
 export const AIResponse = memo(
   ({ className, options, children, ...props }: AIResponseProps) => (
     <div
@@ -177,13 +189,13 @@ export const AIResponse = memo(
       )}
       {...props}
     >
-      <ReactMarkdown
+      <MarkdownAsync
         components={components}
         remarkPlugins={[remarkGfm]}
         {...options}
       >
         {children}
-      </ReactMarkdown>
+      </MarkdownAsync>
     </div>
   ),
   (prevProps, nextProps) => prevProps.children === nextProps.children
