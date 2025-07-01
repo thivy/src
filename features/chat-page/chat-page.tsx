@@ -176,13 +176,13 @@ const Example = () => {
     >
       <ResizablePanel className="relative flex-1 min-w-[530px] h-screen flex flex-col">
         <AIConversation>
-          <AIConversationContent>
+          <AIConversationContent className="@container">
             <AppPageHeader />
             {messages.map(({ content, ...message }, index) => (
               <AIMessage
                 from={message.from}
                 key={index}
-                className="container max-w-3xl mx-auto "
+                className="container max-w-3xl mx-auto px-2 @3xl:px-0"
               >
                 <AIMessageContent>
                   <AIResponse>{content}</AIResponse>
