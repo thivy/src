@@ -12,7 +12,7 @@ import { NavMain } from "@/features/app-sidebar/nav-main";
 import { NavProjects } from "@/features/app-sidebar/nav-projects";
 import { UserDropdown } from "@/features/app-sidebar/nav-user";
 import { Suspense } from "react";
-import { auth } from "../auth";
+import { auth } from "../auth/auth";
 
 // This is sample data.
 const data = {

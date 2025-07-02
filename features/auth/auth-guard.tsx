@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { auth } from ".";
+import { auth } from "./auth";
 
 export const GuardWithAuth = async (props: React.PropsWithChildren) => {
   const { children } = props;
@@ -8,4 +8,9 @@ export const GuardWithAuth = async (props: React.PropsWithChildren) => {
     redirect("/");
   }
   return <>{children}</>;
+};
+
+export const userIsLoggedIn = async (): Promise<boolean> => {
+  const session = await auth();
+  return !!session;
 };
