@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { ComponentProps, HTMLAttributes } from "react";
 
 export type AIMessageProps = HTMLAttributes<HTMLDivElement> & {
-  from: "user" | "assistant" | "tool";
+  from: "system" | "user" | "assistant";
 };
 
 export const AIMessage = ({ className, from, ...props }: AIMessageProps) => (
@@ -25,7 +25,7 @@ export const AIMessageContent = ({
 }: AIMessageContentProps) => (
   <div
     className={cn(
-      "flex flex-col gap-2 rounded-lg  py-3 text-sm",
+      "flex flex-col gap-2 rounded-lg  py-3 text-sm group-[.is-assistant]:w-full",
       "text-foreground",
       "group-[.is-user]:bg-input group-[.is-user]:text-foreground group-[.is-user]:px-4",
       className
