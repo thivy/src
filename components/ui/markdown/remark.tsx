@@ -15,11 +15,6 @@ import {
   CodeBlockHeader,
   CodeBlockItem,
   type CodeBlockProps,
-  CodeBlockSelect,
-  CodeBlockSelectContent,
-  CodeBlockSelectItem,
-  CodeBlockSelectTrigger,
-  CodeBlockSelectValue,
 } from "./code-block";
 
 const components: Options["components"] = {
@@ -93,12 +88,39 @@ const components: Options["components"] = {
     </h6>
   ),
   pre: ({ node, className, children }) => {
-    let language = "javascript";
-
-    if (typeof node?.properties?.className === "string") {
-      language = node.properties.className.replace("language-", "");
+    const language = "javascript";
+    if (
+      node?.children &&
+      Array.isArray(node.children) &&
+      node.children[0] &&
+      typeof node.children[0] === "object" &&
+      "properties" in node.children[0]
+    ) {
+      // language = node.properties.className.replace("language-", "");
+      // Only log if properties exists
+      // console.log((node.children[0] as { properties?: unknown }).properties);
     }
+    // if (typeof node?.properties?.className === "string") {
+    //   console.log(data);
+    //   language = node.properties.className.replace("language-", "");
+    // }
+    console.log(node);
+    if (node?.children) {
+      const children = node.children;
 
+      if (children.length > 0) {
+        const firstChild = children[0];
+
+        if (firstChild.type === "element") {
+          const firstNode = firstChild.properties["className"];
+          if (Array.isArray(firstNode)) {
+            console.log(firstNode[0]);
+            // language = firstNode[0].replace("language-", "");
+          }
+          // language = firstNode.className.replace("language-", "");
+        }
+      }
+    }
     const childrenIsCode =
       typeof children === "object" &&
       children !== null &&
@@ -131,18 +153,7 @@ const components: Options["components"] = {
               </CodeBlockFilename>
             )}
           </CodeBlockFiles>
-          <CodeBlockSelect>
-            <CodeBlockSelectTrigger>
-              <CodeBlockSelectValue />
-            </CodeBlockSelectTrigger>
-            <CodeBlockSelectContent>
-              {(item) => (
-                <CodeBlockSelectItem key={item.language} value={item.language}>
-                  {item.language}
-                </CodeBlockSelectItem>
-              )}
-            </CodeBlockSelectContent>
-          </CodeBlockSelect>
+
           <CodeBlockCopyButton
             onCopy={() => console.log("Copied code to clipboard")}
             onError={() => console.error("Failed to copy code to clipboard")}
