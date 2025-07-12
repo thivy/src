@@ -13,11 +13,14 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { useChat } from "@ai-sdk/react";
+import { useState } from "react";
 import { AppPageHeader } from "../root/app-layout";
 import ChatInput from "./chat-input";
 
 const Example = () => {
   const { messages, sendMessage, status } = useChat({});
+  const [input, setInput] = useState("");
+
   return (
     <ResizablePanelGroup
       className="flex h-screen overflow-hidden gap-2"
@@ -46,12 +49,12 @@ const Example = () => {
           <AIConversationScrollButton />
         </AIConversation>
         <ChatInput
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           status={status}
           onSubmit={() => {
-            sendMessage({
-              role: "user" as const,
-              parts: [{ type: "text", text: "hello" }],
-            });
+            sendMessage({ text: input });
+            setInput("");
           }}
         />
       </ResizablePanel>

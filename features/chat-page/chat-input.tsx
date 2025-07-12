@@ -31,8 +31,8 @@ const models = [
 
 type Props = {
   onSubmit: FormEventHandler<HTMLFormElement>;
-  value?: string;
-  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+  value: string;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
   status: ChatStatus;
 };
 
@@ -74,7 +74,10 @@ const ChatInput = (props: Props) => {
               <AIInputButton>
                 <HugeiconsIcon strokeWidth={1.5} icon={Mic02Icon} />
               </AIInputButton>
-              <AIInputSubmit status={props.status} />
+              <AIInputSubmit
+                disabled={props.status === "submitted"}
+                status={props.status}
+              />
             </AIInputTools>
           </AIInputToolbar>
         </AIInput>
