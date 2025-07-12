@@ -106,7 +106,7 @@ const wordHighlightClassNames = cn(
 
 const codeBlockClassName = cn(
   "mt-0 bg-background text-sm",
-  "[&_pre]:py-4",
+  "[&_pre]:py-4 [&pre]:bg-green-200!",
   "[&_.shiki]:!bg-[var(--shiki-bg)]",
   "[&_code]:w-full",
   "[&_code]:grid",
@@ -125,8 +125,16 @@ const highlight = (
   codeToHtml(html, {
     lang: language ?? "typescript",
     themes: themes ?? {
-      light: "github-light",
-      dark: "slack-dark",
+      light: "min-light",
+      dark: "min-dark",
+    },
+    colorReplacements: {
+      "min-dark": {
+        "#1f1f1f": "transparent", // Replace background
+      },
+      "min-light": {
+        "#ffffff": "transparent", // Replace light background
+      },
     },
     transformers: [
       transformerNotationDiff({
@@ -495,15 +503,9 @@ export const CodeBlockContent = ({
     highlightCode();
   }, [highlightParams]);
 
-  if (!(syntaxHighlighting && html)) {
+  if (!(highlightParams.syntaxHighlighting && html)) {
     return <CodeBlockFallback>{children}</CodeBlockFallback>;
   }
 
-  return (
-    <div
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: "Kinda how Shiki works"
-      dangerouslySetInnerHTML={{ __html: html }}
-      {...props}
-    />
-  );
+  return <div dangerouslySetInnerHTML={{ __html: html }} {...props} />;
 };
