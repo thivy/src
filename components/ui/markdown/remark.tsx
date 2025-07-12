@@ -88,23 +88,8 @@ const components: Options["components"] = {
     </h6>
   ),
   pre: ({ node, className, children }) => {
-    const language = "javascript";
-    if (
-      node?.children &&
-      Array.isArray(node.children) &&
-      node.children[0] &&
-      typeof node.children[0] === "object" &&
-      "properties" in node.children[0]
-    ) {
-      // language = node.properties.className.replace("language-", "");
-      // Only log if properties exists
-      // console.log((node.children[0] as { properties?: unknown }).properties);
-    }
-    // if (typeof node?.properties?.className === "string") {
-    //   console.log(data);
-    //   language = node.properties.className.replace("language-", "");
-    // }
-    console.log(node);
+    let language = "javascript";
+
     if (node?.children) {
       const children = node.children;
 
@@ -114,10 +99,8 @@ const components: Options["components"] = {
         if (firstChild.type === "element") {
           const firstNode = firstChild.properties["className"];
           if (Array.isArray(firstNode)) {
-            console.log(firstNode[0]);
-            // language = firstNode[0].replace("language-", "");
+            language = `${firstNode[0]}`.replace("language-", "");
           }
-          // language = firstNode.className.replace("language-", "");
         }
       }
     }
@@ -134,7 +117,7 @@ const components: Options["components"] = {
     const data: CodeBlockProps["data"] = [
       {
         language,
-        filename: "index.js",
+        filename: language,
         code: (children.props as { children: string }).children,
       },
     ];
