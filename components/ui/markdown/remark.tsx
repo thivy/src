@@ -1,12 +1,14 @@
 "use client";
-import dynamic from "next/dynamic";
 
 import { cn } from "@/components/lib/utils";
-import { type Options } from "react-markdown";
+import { PropsWithChildren } from "react";
+import Markdown, { type Options } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   type BundledLanguage,
   CodeBlock,
   CodeBlockBody,
+  CodeBlockContent,
   CodeBlockCopyButton,
   CodeBlockFilename,
   CodeBlockFiles,
@@ -149,11 +151,9 @@ const components: Options["components"] = {
         <CodeBlockBody>
           {(item) => (
             <CodeBlockItem key={item.language} value={item.language}>
-              <CodeBlockContentAsync
-                language={item.language as BundledLanguage}
-              >
+              <CodeBlockContent language={item.language as BundledLanguage}>
                 {item.code}
-              </CodeBlockContentAsync>
+              </CodeBlockContent>
             </CodeBlockItem>
           )}
         </CodeBlockBody>
@@ -162,31 +162,6 @@ const components: Options["components"] = {
   },
 };
 
-const CodeBlockContentAsync = dynamic(
-  async () => {
-    const comp = await import("./code-block");
-    return comp.CodeBlockContent;
-  },
-  {
-    loading: () => <p>...</p>,
-    ssr: false,
-  }
-);
-
-const MarkdownAsync = dynamic(
-  async () => {
-    const comp = await import("react-markdown");
-    return comp.default;
-  },
-  {
-    loading: () => <p>...</p>,
-    ssr: false,
-  }
-);
-
-import { PropsWithChildren } from "react";
-import remarkGfm from "remark-gfm";
-
 export type ReactMarkdownProps = PropsWithChildren & {
   options?: Options;
   children: Options["children"];
@@ -194,12 +169,8 @@ export type ReactMarkdownProps = PropsWithChildren & {
 
 export const ReactMarkdown = ({ options, children }: ReactMarkdownProps) => {
   return (
-    <MarkdownAsync
-      components={components}
-      remarkPlugins={[remarkGfm]}
-      {...options}
-    >
+    <Markdown components={components} remarkPlugins={[remarkGfm]} {...options}>
       {children}
-    </MarkdownAsync>
+    </Markdown>
   );
 };
