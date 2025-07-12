@@ -2,13 +2,6 @@
 
 import { cn } from "@/components/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -105,8 +98,8 @@ const wordHighlightClassNames = cn(
 );
 
 const codeBlockClassName = cn(
-  "mt-0 bg-background text-sm",
-  "[&_pre]:py-4 [&pre]:bg-green-200!",
+  "mt-0 text-sm",
+  "[&_pre]:py-4",
   "[&_.shiki]:!bg-[var(--shiki-bg)]",
   "[&_code]:w-full",
   "[&_code]:grid",
@@ -197,7 +190,10 @@ export const CodeBlock = ({
   return (
     <CodeBlockContext.Provider value={{ value, onValueChange, data }}>
       <div
-        className={cn("size-full overflow-hidden rounded-md border", className)}
+        className={cn(
+          "size-full overflow-hidden rounded-md border bg-slate-50/50 dark:bg-black/10",
+          className
+        )}
         {...props}
       />
     </CodeBlockContext.Provider>
@@ -255,71 +251,13 @@ export const CodeBlockFilename = ({
 
   return (
     <div
-      className={cn(
-        "flex items-center gap-2 px-4 py-1.5 text-muted-foreground text-xs",
-        className
-      )}
+      className={cn("flex items-center gap-2 px-4 py-1.5 text-xs", className)}
       {...props}
     >
       <span className="flex-1 truncate">{children}</span>
     </div>
   );
 };
-
-export type CodeBlockSelectProps = ComponentProps<typeof Select>;
-
-export const CodeBlockSelect = (props: CodeBlockSelectProps) => {
-  const { value, onValueChange } = useContext(CodeBlockContext);
-
-  return <Select onValueChange={onValueChange} value={value} {...props} />;
-};
-
-export type CodeBlockSelectTriggerProps = ComponentProps<typeof SelectTrigger>;
-
-export const CodeBlockSelectTrigger = ({
-  className,
-  ...props
-}: CodeBlockSelectTriggerProps) => (
-  <SelectTrigger
-    size="sm"
-    className={cn(
-      "w-fit border-none text-xs shadow-none bg-transparent",
-      className
-    )}
-    {...props}
-  />
-);
-
-export type CodeBlockSelectValueProps = ComponentProps<typeof SelectValue>;
-
-export const CodeBlockSelectValue = (props: CodeBlockSelectValueProps) => (
-  <SelectValue {...props} />
-);
-
-export type CodeBlockSelectContentProps = Omit<
-  ComponentProps<typeof SelectContent>,
-  "children"
-> & {
-  children: (item: CodeBlockData) => ReactNode;
-};
-
-export const CodeBlockSelectContent = ({
-  children,
-  ...props
-}: CodeBlockSelectContentProps) => {
-  const { data } = useContext(CodeBlockContext);
-
-  return <SelectContent {...props}>{data.map(children)}</SelectContent>;
-};
-
-export type CodeBlockSelectItemProps = ComponentProps<typeof SelectItem>;
-
-export const CodeBlockSelectItem = ({
-  className,
-  ...props
-}: CodeBlockSelectItemProps) => (
-  <SelectItem className={cn("text-sm", className)} {...props} />
-);
 
 export type CodeBlockCopyButtonProps = ComponentProps<typeof Button> & {
   onCopy?: () => void;

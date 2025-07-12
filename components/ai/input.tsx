@@ -82,10 +82,13 @@ export const AIInput = ({ className, ...props }: AIInputProps) => (
 export type AIInputTextareaProps = ComponentProps<typeof Textarea> & {
   minHeight?: number;
   maxHeight?: number;
+  canSubmit: boolean;
 };
 export const AIInputTextarea = ({
   onChange,
   className,
+  canSubmit,
+  value = "",
   placeholder = "",
   minHeight = 48,
   maxHeight = 164,
@@ -95,15 +98,23 @@ export const AIInputTextarea = ({
     minHeight,
     maxHeight,
   });
+
   const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
-    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+    if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && canSubmit) {
       e.preventDefault();
       const form = e.currentTarget.form;
+
       if (form) {
         form.requestSubmit();
       }
     }
   };
+
+  const valueIsEmpty = value.toString().trim() === "";
+  if (valueIsEmpty) {
+    adjustHeight(true);
+  }
+
   return (
     <Textarea
       className={cn(

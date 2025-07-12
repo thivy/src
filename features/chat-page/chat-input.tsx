@@ -37,9 +37,15 @@ type Props = {
 };
 
 const ChatInput = (props: Props) => {
+  const valueIsEmpty = props.value.trim() === "";
+  const submitDisabled = valueIsEmpty || props.status === "submitted";
+  const canSendMessage = !submitDisabled && props.status !== "streaming";
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    props.onSubmit(event);
+    if (canSendMessage) {
+      props.onSubmit(event);
+    }
   };
   const [model, setModel] = useState<string>(models[0].id);
 
@@ -48,6 +54,7 @@ const ChatInput = (props: Props) => {
       <div className="container max-w-3xl mx-auto w-full ">
         <AIInput onSubmit={handleSubmit}>
           <AIInputTextarea
+            canSubmit={canSendMessage}
             onChange={props.onChange}
             value={props.value}
             placeholder="Ask anything"
@@ -74,10 +81,7 @@ const ChatInput = (props: Props) => {
               <AIInputButton>
                 <HugeiconsIcon strokeWidth={1.5} icon={Mic02Icon} />
               </AIInputButton>
-              <AIInputSubmit
-                disabled={props.status === "submitted"}
-                status={props.status}
-              />
+              <AIInputSubmit disabled={submitDisabled} status={props.status} />
             </AIInputTools>
           </AIInputToolbar>
         </AIInput>
