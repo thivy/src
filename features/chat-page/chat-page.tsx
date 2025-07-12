@@ -13,12 +13,26 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import { useState } from "react";
 import { AppPageHeader } from "../root/app-layout";
 import ChatInput from "./chat-input";
 
 const Example = () => {
-  const { messages, sendMessage, status } = useChat({});
+  const { messages, sendMessage, status } = useChat({
+    id: "azure-chat",
+    transport: new DefaultChatTransport({
+      prepareSendMessagesRequest: ({ id, messages }) => {
+        return {
+          body: {
+            id,
+            threadId: "thread_gmBqVy3vsETknVAVClDjN00g",
+            message: messages[messages.length - 1],
+          },
+        };
+      },
+    }),
+  });
   const [input, setInput] = useState("");
 
   return (

@@ -88,7 +88,6 @@ export const AIInputTextarea = ({
   onChange,
   className,
   canSubmit,
-  value = "",
   placeholder = "",
   minHeight = 48,
   maxHeight = 164,
@@ -110,7 +109,7 @@ export const AIInputTextarea = ({
     }
   };
 
-  const valueIsEmpty = value.toString().trim() === "";
+  const valueIsEmpty = props.value?.toString().trim() === "";
   if (valueIsEmpty) {
     adjustHeight(true);
   }

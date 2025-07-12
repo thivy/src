@@ -9,22 +9,37 @@ import {
   ThreadRun,
 } from "@azure/ai-agents";
 import { DefaultAzureCredential } from "@azure/identity";
-import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
+import {
+  createUIMessageStream,
+  createUIMessageStreamResponse,
+  UIMessage,
+} from "ai";
 
 const projectEndpoint = process.env.AZURE_AI_FOUNDRY_PROJECT_ENDPOINT!;
 const agentId = process.env.AZURE_AI_FOUNDRY_DEFAULT_AGENT_ID!;
 const client = new AgentsClient(projectEndpoint, new DefaultAzureCredential());
 
+export const convertToAgentMessage = (message: UIMessage): string => {
+  let _message = "";
+
+  if (message.role === "user" && message.parts[0].type === "text") {
+    _message = message.parts[0].text;
+  }
+
+  return _message;
+};
+
 export const createAgentUIMessageStreamResponse = (
   threadId: string,
   agentId: string,
-  userMessage: string
+  userMessage: UIMessage
 ) => {
   const _stream = createUIMessageStream({
     execute: async ({ writer }) => {
       const thread = await client.threads.get(threadId);
+      const message = convertToAgentMessage(userMessage);
 
-      await client.messages.create(thread.id, "user", userMessage);
+      await client.messages.create(thread.id, "user", message);
 
       const streamEventMessages = await client.runs
         .create(thread.id, agentId)
