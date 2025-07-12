@@ -14,6 +14,7 @@ import {
 } from "@/components/ai/input";
 import { Image02Icon, Mic02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { ChatStatus } from "ai";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 
 const models = [
@@ -31,26 +32,14 @@ const models = [
 type Props = {
   onSubmit: FormEventHandler<HTMLFormElement>;
   value?: string;
-  e?: ChangeEventHandler<HTMLTextAreaElement>;
+  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+  status: ChatStatus;
 };
 
 const ChatInput = (props: Props) => {
-  // const [text, setText] = useState<string>(props.value || "");
-  const [status, setStatus] = useState<
-    "submitted" | "streaming" | "ready" | "error"
-  >("ready");
-
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    //
     props.onSubmit(event);
-    setStatus("submitted");
-    setTimeout(() => {
-      setStatus("streaming");
-    }, 200);
-    setTimeout(() => {
-      setStatus("ready");
-    }, 2000);
   };
   const [model, setModel] = useState<string>(models[0].id);
 
@@ -59,7 +48,7 @@ const ChatInput = (props: Props) => {
       <div className="container max-w-3xl mx-auto w-full ">
         <AIInput onSubmit={handleSubmit}>
           <AIInputTextarea
-            onChange={props.e}
+            onChange={props.onChange}
             value={props.value}
             placeholder="Ask anything"
           />
@@ -85,7 +74,7 @@ const ChatInput = (props: Props) => {
               <AIInputButton>
                 <HugeiconsIcon strokeWidth={1.5} icon={Mic02Icon} />
               </AIInputButton>
-              <AIInputSubmit status={status} />
+              <AIInputSubmit status={props.status} />
             </AIInputTools>
           </AIInputToolbar>
         </AIInput>

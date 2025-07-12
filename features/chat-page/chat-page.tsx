@@ -17,7 +17,7 @@ import { AppPageHeader } from "../root/app-layout";
 import ChatInput from "./chat-input";
 
 const Example = () => {
-  const { messages, sendMessage } = useChat({});
+  const { messages, sendMessage, status } = useChat({});
   return (
     <ResizablePanelGroup
       className="flex h-screen overflow-hidden gap-2"
@@ -46,8 +46,8 @@ const Example = () => {
           <AIConversationScrollButton />
         </AIConversation>
         <ChatInput
+          status={status}
           onSubmit={() => {
-            console.log("Submit clicked");
             sendMessage({
               role: "user" as const,
               parts: [{ type: "text", text: "hello" }],
