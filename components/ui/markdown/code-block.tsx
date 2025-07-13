@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import {
   transformerNotationDiff,
   transformerNotationErrorLevel,
@@ -16,16 +15,11 @@ import {
 import type {
   ComponentProps,
   HTMLAttributes,
+  PropsWithChildren,
   ReactElement,
   ReactNode,
 } from "react";
-import {
-  cloneElement,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { cloneElement, useEffect, useState } from "react";
 import {
   type BundledLanguage,
   type CodeOptionsMultipleThemes,
@@ -98,7 +92,7 @@ const wordHighlightClassNames = cn(
 
 const codeBlockClassName = cn(
   "mt-0 text-sm",
-  "[&_pre]:py-4",
+  "[&_pre]:pt-4",
   "[&_.shiki]:!bg-[var(--shiki-bg)]",
   "[&_code]:w-full",
   "[&_code]:grid",
@@ -149,21 +143,8 @@ const highlight = (
 
 type CodeBlockData = {
   language: string;
-  filename: string;
   code: string;
 };
-
-type CodeBlockContextType = {
-  value: string | undefined;
-  onValueChange: ((value: string) => void) | undefined;
-  data: CodeBlockData[];
-};
-
-const CodeBlockContext = createContext<CodeBlockContextType>({
-  value: undefined,
-  onValueChange: undefined,
-  data: [],
-});
 
 export type CodeBlockProps = HTMLAttributes<HTMLDivElement> & {
   defaultValue?: string;
@@ -172,30 +153,15 @@ export type CodeBlockProps = HTMLAttributes<HTMLDivElement> & {
   data: CodeBlockData[];
 };
 
-export const CodeBlock = ({
-  value: controlledValue,
-  onValueChange: controlledOnValueChange,
-  defaultValue,
-  className,
-  data,
-  ...props
-}: CodeBlockProps) => {
-  const [value, onValueChange] = useControllableState({
-    defaultProp: defaultValue ?? "",
-    prop: controlledValue,
-    onChange: controlledOnValueChange,
-  });
-
+export const CodeBlock = ({ className, ...props }: CodeBlockProps) => {
   return (
-    <CodeBlockContext.Provider value={{ value, onValueChange, data }}>
-      <div
-        className={cn(
-          "size-full overflow-hidden rounded-md border bg-slate-50/50 dark:bg-black/10",
-          className
-        )}
-        {...props}
-      />
-    </CodeBlockContext.Provider>
+    <div
+      className={cn(
+        "size-full overflow-hidden rounded-md border bg-slate-50/50 dark:bg-black/10",
+        className
+      )}
+      {...props}
+    />
   );
 };
 
@@ -208,49 +174,21 @@ export const CodeBlockHeader = ({
   <div className={cn("flex flex-row items-center p-1", className)} {...props} />
 );
 
-export type CodeBlockFilesProps = Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children"
-> & {
-  children: (item: CodeBlockData) => ReactNode;
-};
-
-export const CodeBlockFiles = ({
-  className,
-  children,
-  ...props
-}: CodeBlockFilesProps) => {
-  const { data } = useContext(CodeBlockContext);
-
-  return (
-    <div
-      className={cn("flex grow flex-row items-center gap-2", className)}
-      {...props}
-    >
-      {data.map(children)}
-    </div>
-  );
-};
-
 export type CodeBlockFilenameProps = HTMLAttributes<HTMLDivElement> & {
   value?: string;
 };
 
 export const CodeBlockFilename = ({
   className,
-  value,
   children,
   ...props
 }: CodeBlockFilenameProps) => {
-  const { value: activeValue } = useContext(CodeBlockContext);
-
-  if (value !== activeValue) {
-    return null;
-  }
-
   return (
     <div
-      className={cn("flex items-center gap-2 px-4 py-1.5 text-xs", className)}
+      className={cn(
+        "flex justify-between flex-1 gap-2 px-4 py-1.5 text-xs",
+        className
+      )}
       {...props}
     >
       <span className="flex-1 truncate">{children}</span>
@@ -262,6 +200,7 @@ export type CodeBlockCopyButtonProps = ComponentProps<typeof Button> & {
   onCopy?: () => void;
   onError?: (error: Error) => void;
   timeout?: number;
+  code?: string;
 };
 
 export const CodeBlockCopyButton = ({
@@ -269,13 +208,12 @@ export const CodeBlockCopyButton = ({
   onCopy,
   onError,
   timeout = 2000,
+  code,
   children,
   className,
   ...props
 }: CodeBlockCopyButtonProps) => {
   const [isCopied, setIsCopied] = useState(false);
-  const { data, value } = useContext(CodeBlockContext);
-  const code = data.find((item) => item.language === value)?.code;
 
   const copyToClipboard = () => {
     if (
@@ -339,17 +277,8 @@ const CodeBlockFallback = ({ children, ...props }: CodeBlockFallbackProps) => (
   </div>
 );
 
-export type CodeBlockBodyProps = Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children"
-> & {
-  children: (item: CodeBlockData) => ReactNode;
-};
-
-export const CodeBlockBody = ({ children, ...props }: CodeBlockBodyProps) => {
-  const { data } = useContext(CodeBlockContext);
-
-  return <div {...props}>{data.map(children)}</div>;
+export const CodeBlockBody = ({ children, ...props }: PropsWithChildren) => {
+  return <div {...props}>{children}</div>;
 };
 
 export type CodeBlockItemProps = HTMLAttributes<HTMLDivElement> & {
@@ -361,15 +290,8 @@ export const CodeBlockItem = ({
   children,
   lineNumbers = true,
   className,
-  value,
   ...props
 }: CodeBlockItemProps) => {
-  const { value: activeValue } = useContext(CodeBlockContext);
-
-  if (value !== activeValue) {
-    return null;
-  }
-
   return (
     <div
       className={cn(
@@ -408,6 +330,7 @@ export const CodeBlockContent = ({
   // Use useEffect to handle the async highlighting
   useEffect(() => {
     if (!syntaxHighlighting) {
+      console.warn("Syntax highlighting is disabled.");
       setHtml(null);
       return;
     }
