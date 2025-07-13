@@ -11,7 +11,7 @@ import {
   AIInputTextarea,
   AIInputToolbar,
   AIInputTools,
-} from "@/components/ai/input";
+} from "@/components/ui/ai/input";
 import { Image02Icon, Mic02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ChatStatus } from "ai";

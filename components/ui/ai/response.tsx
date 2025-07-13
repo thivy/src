@@ -4,7 +4,7 @@ import { cn } from "@/components/lib/utils";
 import type { HTMLAttributes } from "react";
 import { memo } from "react";
 import { type Options } from "react-markdown";
-import { ReactMarkdown } from "../ui/markdown/remark";
+import { ReactMarkdown } from "../markdown/remark";
 
 export type AIResponseProps = HTMLAttributes<HTMLDivElement> & {
   options?: Options;

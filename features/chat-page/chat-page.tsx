@@ -4,9 +4,9 @@ import {
   AIConversation,
   AIConversationContent,
   AIConversationScrollButton,
-} from "@/components/ai/conversation";
-import { AIMessage, AIMessageContent } from "@/components/ai/message";
-import { AIResponse } from "@/components/ai/response";
+} from "@/components/ui/ai/conversation";
+import { AIMessage, AIMessageContent } from "@/components/ui/ai/message";
+import { AIResponse } from "@/components/ui/ai/response";
 import {
   ResizableHandle,
   ResizablePanel,

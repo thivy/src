@@ -6,7 +6,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import type { ComponentProps } from "react";
 import { useCallback } from "react";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
-import { Button } from "../ui/button";
+import { Button } from "../button";
 
 export type AIConversationProps = ComponentProps<typeof StickToBottom>;
 

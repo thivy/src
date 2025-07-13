@@ -17,6 +17,11 @@ import {
 } from "./code-block";
 
 const components: Options["components"] = {
+  p: ({ children, className, ...props }) => (
+    <p className={cn("my-4", className)} {...props}>
+      {children}
+    </p>
+  ),
   img: ({ src, alt, className, ...props }) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img
