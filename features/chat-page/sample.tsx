@@ -3,7 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 
 export default function SamplePage() {
-  const { messages, sendMessage } = useChat({});
+  const { messages, append } = useChat({});
   return (
     <>
       {messages.map((message) => (
@@ -18,9 +18,9 @@ export default function SamplePage() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          const formData = new FormData(e.target);
+          const formData = new FormData(e.target as HTMLFormElement);
           const prompt = formData.get("prompt") as string;
-          sendMessage({
+          append({
             role: "user",
             parts: [{ type: "text", text: prompt }],
           });

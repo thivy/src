@@ -1,9 +1,9 @@
 import { UIMessage, useChat } from "@ai-sdk/react";
-import { UIDataTypes, UITools } from "ai";
+import { UIDataTypes } from "ai";
 import React, { PropsWithChildren } from "react";
 
 type ChatPageContextProps = {
-  messages: UIMessage<unknown, UIDataTypes, UITools>[];
+  messages: UIMessage<unknown, UIDataTypes>[];
   sendMessage: unknown;
 };
 

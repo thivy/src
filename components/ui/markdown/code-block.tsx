@@ -24,7 +24,6 @@ import {
   createContext,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import {
@@ -406,31 +405,16 @@ export const CodeBlockContent = ({
 }: CodeBlockContentProps) => {
   const [html, setHtml] = useState<string | null>(null);
 
-  // Memoize the highlight parameters to avoid unnecessary re-computations
-  const highlightParams = useMemo(
-    () => ({
-      code: children as string,
-      language,
-      themes,
-      syntaxHighlighting,
-    }),
-    [children, language, themes, syntaxHighlighting]
-  );
-
   // Use useEffect to handle the async highlighting
   useEffect(() => {
-    if (!highlightParams.syntaxHighlighting) {
+    if (!syntaxHighlighting) {
       setHtml(null);
       return;
     }
 
     const highlightCode = async () => {
       try {
-        const code = await highlight(
-          highlightParams.code,
-          highlightParams.language,
-          highlightParams.themes
-        );
+        const code = await highlight(children, language, themes);
         setHtml(code);
       } catch {
         // ignore any highlighting error
@@ -439,9 +423,9 @@ export const CodeBlockContent = ({
     };
 
     highlightCode();
-  }, [highlightParams]);
+  }, [children, language, themes, syntaxHighlighting]);
 
-  if (!(highlightParams.syntaxHighlighting && html)) {
+  if (!(syntaxHighlighting && html)) {
     return <CodeBlockFallback>{children}</CodeBlockFallback>;
   }
 
