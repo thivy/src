@@ -5,6 +5,7 @@ import type { HTMLAttributes } from "react";
 import { memo } from "react";
 import { type Options } from "react-markdown";
 import { ReactMarkdown } from "../markdown/remark";
+import { ShimmeringText, ShimmeringTextProps } from "../shimmering";
 
 export type AIResponseProps = HTMLAttributes<HTMLDivElement> & {
   options?: Options;
@@ -27,3 +28,20 @@ export const AIResponse = memo(
 );
 
 AIResponse.displayName = "AIResponse";
+
+type Props = {
+  status: "submitted" | "streaming" | "ready" | "error";
+} & ShimmeringTextProps;
+
+export const AIResponseLoading = ({ status, ...props }: Props) => {
+  if (status === "streaming" || status === "submitted") {
+    return (
+      <div className="container max-w-3xl mx-auto px-2 @3xl:px-0">
+        <ShimmeringText {...props} />
+      </div>
+    );
+  }
+  return null;
+};
+
+AIResponseLoading.displayName = "AIResponseLoading";

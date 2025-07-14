@@ -6,19 +6,15 @@ import {
   AIConversationScrollButton,
 } from "@/components/ui/ai/conversation";
 import { AIMessage, AIMessageContent } from "@/components/ui/ai/message";
-import { AIResponse } from "@/components/ui/ai/response";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import { AIResponse, AIResponseLoading } from "@/components/ui/ai/response";
+import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useState } from "react";
 import { AppPageHeader } from "../root/app-layout";
 import ChatInput from "./chat-input";
 
-const Example = () => {
+const ChatPage = () => {
   const { messages, sendMessage, status } = useChat({
     id: "azure-chat",
     transport: new DefaultChatTransport({
@@ -42,7 +38,7 @@ const Example = () => {
     >
       <ResizablePanel className="relative flex-1 min-w-[530px] h-screen flex flex-col @container">
         <AIConversation>
-          <AIConversationContent className="@container">
+          <AIConversationContent className="@container pb-[120px]">
             <AppPageHeader />
             {messages.map((message) => (
               <AIMessage
@@ -59,6 +55,7 @@ const Example = () => {
                 )}
               </AIMessage>
             ))}
+            <AIResponseLoading status={status} text="loading" />
           </AIConversationContent>
           <AIConversationScrollButton />
         </AIConversation>
@@ -72,14 +69,14 @@ const Example = () => {
           }}
         />
       </ResizablePanel>
-      <ResizableHandle withHandle />
+      {/* <ResizableHandle withHandle />
       <ResizablePanel className="min-w-96 h-full max-h-svw overflow-hidden px-2">
         <AppPageHeader />
         <div className="inset-0 flex items-center justify-center h-full">
           Artifact Area
         </div>
-      </ResizablePanel>
+      </ResizablePanel> */}
     </ResizablePanelGroup>
   );
 };
-export default Example;
+export default ChatPage;
