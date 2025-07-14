@@ -39,9 +39,6 @@ export const createAgentUIMessageStreamResponse = (
       const thread = await client.threads.get(threadId);
       const message = convertToAgentMessage(userMessage);
 
-      throw new Error(
-        "This is a placeholder error. Replace with actual logic to send message."
-      );
       await client.messages.create(thread.id, "user", message);
 
       const streamEventMessages = await client.runs
