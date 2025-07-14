@@ -3,14 +3,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { ComponentProps, HTMLAttributes } from "react";
 
 export type AIMessageProps = HTMLAttributes<HTMLDivElement> & {
-  from: "system" | "user" | "assistant";
+  from: "system" | "user" | "assistant" | "error";
 };
 
 export const AIMessage = ({ className, from, ...props }: AIMessageProps) => (
   <div
     className={cn(
-      "group flex w-full items-end justify-end gap-2 py-5",
-      from === "user" ? "is-user" : "is-assistant flex-row-reverse justify-end",
+      "group flex w-full items-end justify-end gap-2 py-5 container max-w-3xl mx-auto px-2 @3xl:px-0",
+      from === "user" ? "is-user" : "",
+      from === "assistant" ? "is-assistant flex-row-reverse justify-end" : "",
       "",
       className
     )}

@@ -11,7 +11,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import {
   ArrowUp02Icon,
-  Cancel01Icon,
   Loading03Icon,
   StopIcon,
 } from "@hugeicons/core-free-icons";
@@ -200,8 +199,6 @@ export const AIInputSubmit = ({
     );
   } else if (status === "streaming") {
     Icon = <HugeiconsIcon icon={StopIcon} strokeWidth={1.5} />;
-  } else if (status === "error") {
-    Icon = <HugeiconsIcon icon={Cancel01Icon} strokeWidth={1.5} />;
   }
   return (
     <Button

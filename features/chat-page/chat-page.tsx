@@ -6,7 +6,11 @@ import {
   AIConversationScrollButton,
 } from "@/components/ui/ai/conversation";
 import { AIMessage, AIMessageContent } from "@/components/ui/ai/message";
-import { AIResponse, AIResponseLoading } from "@/components/ui/ai/response";
+import {
+  AIResponse,
+  AIResponseError,
+  AIResponseLoading,
+} from "@/components/ui/ai/response";
 import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
@@ -15,8 +19,15 @@ import { AppPageHeader } from "../root/app-layout";
 import ChatInput from "./chat-input";
 
 const ChatPage = () => {
-  const { messages, sendMessage, status } = useChat({
+  const [input, setInput] = useState("");
+
+  const { messages, sendMessage, status, error, regenerate } = useChat({
     id: "azure-chat",
+    onError: (error) => {
+      console.error("Error sending message:", error);
+    },
+    // Replace with your actual chat transport configuration
+    // This is a placeholder and should be replaced with your actual transport logic
     transport: new DefaultChatTransport({
       prepareSendMessagesRequest: ({ id, messages }) => {
         return {
@@ -29,7 +40,6 @@ const ChatPage = () => {
       },
     }),
   });
-  const [input, setInput] = useState("");
 
   return (
     <ResizablePanelGroup
@@ -41,11 +51,7 @@ const ChatPage = () => {
           <AIConversationContent className="@container pb-[120px]">
             <AppPageHeader />
             {messages.map((message) => (
-              <AIMessage
-                from={message.role}
-                key={message.id}
-                className="container max-w-3xl mx-auto px-2 @3xl:px-0"
-              >
+              <AIMessage from={message.role} key={message.id}>
                 {message.parts.map((part, index) =>
                   part.type === "text" ? (
                     <AIMessageContent key={index}>
@@ -56,6 +62,7 @@ const ChatPage = () => {
               </AIMessage>
             ))}
             <AIResponseLoading status={status} text="loading" />
+            <AIResponseError error={error} reload={regenerate} />
           </AIConversationContent>
           <AIConversationScrollButton />
         </AIConversation>

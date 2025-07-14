@@ -4,8 +4,10 @@ import { cn } from "@/components/lib/utils";
 import type { HTMLAttributes } from "react";
 import { memo } from "react";
 import { type Options } from "react-markdown";
+import { Button } from "../button";
 import { ReactMarkdown } from "../markdown/remark";
 import { ShimmeringText, ShimmeringTextProps } from "../shimmering";
+import { AIMessage } from "./message";
 
 export type AIResponseProps = HTMLAttributes<HTMLDivElement> & {
   options?: Options;
@@ -36,12 +38,36 @@ type Props = {
 export const AIResponseLoading = ({ status, ...props }: Props) => {
   if (status === "streaming" || status === "submitted") {
     return (
-      <div className="container max-w-3xl mx-auto px-2 @3xl:px-0">
+      <AIMessage from="assistant">
         <ShimmeringText {...props} />
-      </div>
+      </AIMessage>
     );
   }
   return null;
 };
 
 AIResponseLoading.displayName = "AIResponseLoading";
+
+type AIResponseErrorProps = {
+  error: Error | undefined;
+  reload: () => void;
+};
+
+export const AIResponseError = ({ error, reload }: AIResponseErrorProps) => {
+  if (!error) {
+    return null;
+  }
+
+  return (
+    <AIMessage from="error" className="text-sm flex-col">
+      <p className="text-destructive">
+        {error ? error.message : "Unknown error"}
+      </p>
+      <Button onClick={() => reload()} size={"sm"} variant={"outline"}>
+        Retry
+      </Button>
+    </AIMessage>
+  );
+};
+
+AIResponseError.displayName = "AIResponseError";
