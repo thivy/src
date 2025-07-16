@@ -11,7 +11,11 @@ import {
   AIResponseError,
   AIResponseLoading,
 } from "@/components/ui/ai/response";
-import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useState } from "react";
@@ -26,8 +30,6 @@ const ChatPage = () => {
     onError: (error) => {
       console.error("Error sending message:", error);
     },
-    // Replace with your actual chat transport configuration
-    // This is a placeholder and should be replaced with your actual transport logic
     transport: new DefaultChatTransport({
       prepareSendMessagesRequest: ({ id, messages }) => {
         return {
@@ -43,12 +45,12 @@ const ChatPage = () => {
 
   return (
     <ResizablePanelGroup
-      className="flex h-screen overflow-hidden gap-2"
+      className="flex h-screen overflow-hidden"
       direction="horizontal"
     >
-      <ResizablePanel className="relative flex-1 min-w-[530px] h-screen flex flex-col @container">
+      <ResizablePanel className="relative flex-1 md:min-w-[530px] h-screen flex flex-col @container ">
         <AIConversation>
-          <AIConversationContent className="@container pb-[120px]">
+          <AIConversationContent className="@container pb-[120px] ">
             <AppPageHeader />
             {messages.map((message) => (
               <AIMessage from={message.role} key={message.id}>
@@ -76,13 +78,13 @@ const ChatPage = () => {
           }}
         />
       </ResizablePanel>
-      {/* <ResizableHandle withHandle />
+      <ResizableHandle withHandle className="mx-1" />
       <ResizablePanel className="min-w-96 h-full max-h-svw overflow-hidden px-2">
         <AppPageHeader />
         <div className="inset-0 flex items-center justify-center h-full">
           Artifact Area
         </div>
-      </ResizablePanel> */}
+      </ResizablePanel>
     </ResizablePanelGroup>
   );
 };

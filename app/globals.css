@@ -6,14 +6,6 @@
   scrollbar-color: var(--muted-foreground) transparent;
 }
 
-.scrollbar-gutter-stable {
-  scrollbar-gutter: stable;
-}
-
-.scrollbar-gutter-auto {
-  scrollbar-gutter: auto;
-}
-
 @custom-variant dark (&:is(.dark *));
 :root {
   --background: oklch(0.94 0 0);
