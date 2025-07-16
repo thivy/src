@@ -79,7 +79,7 @@ const ChatPage = () => {
         />
       </ResizablePanel>
       <ResizableHandle withHandle className="mx-1" />
-      <ResizablePanel className="min-w-96 h-full max-h-svw overflow-hidden px-2">
+      <ResizablePanel className="min-w-96 h-full max-h-svw overflow-hidden">
         <AppPageHeader />
         <div className="inset-0 flex items-center justify-center h-full">
           Artifact Area
