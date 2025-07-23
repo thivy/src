@@ -135,11 +135,9 @@ export const createAgentUIMessageStreamResponse = (
                   const textContent = contentPart as MessageDeltaTextContent;
                   let textValue = textContent.text?.value || "No text";
                   const annotations = textContent.text?.annotations || [];
-                  console.log(textValue);
                   if (annotations.length > 0) {
                     annotations.forEach((annotation) => {
                       if (annotation && annotation.type === "url_citation") {
-                        console.log(annotation);
                         const urlAnnotation = annotation as unknown as {
                           index: number;
                           text: string;

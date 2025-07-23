@@ -91,14 +91,14 @@ const wordHighlightClassNames = cn(
 );
 
 const codeBlockClassName = cn(
-  "mt-0 text-sm",
+  "mt-0",
   "[&_pre]:pt-4",
   "[&_.shiki]:!bg-[var(--shiki-bg)]",
   "[&_code]:w-full",
   "[&_code]:grid",
   "[&_code]:overflow-x-auto",
   "[&_code]:bg-transparent",
-  "[&_.line]:px-4",
+  "[&_.line]:px-1",
   "[&_.line]:w-full",
   "[&_.line]:relative"
 );
@@ -141,16 +141,12 @@ const highlight = (
     ],
   });
 
-type CodeBlockData = {
-  language: string;
-  code: string;
-};
-
 export type CodeBlockProps = HTMLAttributes<HTMLDivElement> & {
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;
-  data: CodeBlockData[];
+  code: string;
+  language: string;
 };
 
 export const CodeBlock = ({ className, ...props }: CodeBlockProps) => {

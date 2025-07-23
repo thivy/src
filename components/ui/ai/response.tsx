@@ -1,29 +1,24 @@
 "use client";
 
 import { cn } from "@/components/lib/utils";
-import type { HTMLAttributes } from "react";
+import type { PropsWithChildren } from "react";
 import { memo } from "react";
-import { type Options } from "react-markdown";
 import { Button } from "../button";
-import { ReactMarkdown } from "../markdown/remark";
+import { MarkdocMarkdown } from "../markdown/markdoc";
 import { ShimmeringText, ShimmeringTextProps } from "../shimmering";
 import { AIMessage } from "./message";
 
-export type AIResponseProps = HTMLAttributes<HTMLDivElement> & {
-  options?: Options;
-  children: Options["children"];
-};
+export type AIResponseProps = PropsWithChildren;
 
 export const AIResponse = memo(
-  ({ className, options, children, ...props }: AIResponseProps) => (
+  ({ children, ...props }: AIResponseProps) => (
     <div
       className={cn(
-        "size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 max-w-none",
-        className
+        "size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 max-w-none"
       )}
       {...props}
     >
-      <ReactMarkdown {...options}>{children}</ReactMarkdown>
+      <MarkdocMarkdown content={children as string} />
     </div>
   ),
   (prevProps, nextProps) => prevProps.children === nextProps.children
