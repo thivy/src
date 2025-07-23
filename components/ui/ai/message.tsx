@@ -9,15 +9,24 @@ export type AIMessageProps = HTMLAttributes<HTMLDivElement> & {
 export const AIMessage = ({ className, from, ...props }: AIMessageProps) => (
   <div
     className={cn(
-      "group flex w-full items-end justify-end gap-2 py-5 container max-w-3xl mx-auto [scrollbar-gutter:stable_both-edges] overflow-y-auto",
+      "group flex flex-col w-full items-end justify-end gap-2 py-5 container max-w-3xl mx-auto [scrollbar-gutter:stable_both-edges] overflow-y-auto",
       from === "user" ? "is-user" : "",
-      from === "assistant" ? "is-assistant flex-row-reverse justify-end" : "",
+      from === "assistant" ? "is-assistant flex-row-reverse" : "",
       "",
       className
     )}
     {...props}
   />
 );
+
+export type AIMessageResourcesProps = HTMLAttributes<HTMLDivElement> & {};
+export const AIMessageResources = ({
+  className,
+  ...props
+}: AIMessageResourcesProps) => (
+  <div className={cn("flex w-full ", className)} {...props} />
+);
+
 export type AIMessageContentProps = HTMLAttributes<HTMLDivElement>;
 export const AIMessageContent = ({
   children,

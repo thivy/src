@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/resizable";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import Link from "next/link";
 import { useState } from "react";
 import { AppPageHeader } from "../root/app-layout";
 import ChatInput from "./chat-input";
@@ -35,7 +36,7 @@ const ChatPage = () => {
         return {
           body: {
             id,
-            threadId: "thread_gmBqVy3vsETknVAVClDjN00g",
+            threadId: "thread_ukoGF95P1scP3DLpROiydR8V",
             message: messages[messages.length - 1],
           },
         };
@@ -52,17 +53,51 @@ const ChatPage = () => {
         <AIConversation>
           <AIConversationContent className="@container pb-[120px] ">
             <AppPageHeader />
-            {messages.map((message) => (
-              <AIMessage from={message.role} key={message.id}>
-                {message.parts.map((part, index) =>
-                  part.type === "text" ? (
-                    <AIMessageContent key={index}>
-                      <AIResponse>{part.text}</AIResponse>
-                    </AIMessageContent>
-                  ) : null
-                )}
-              </AIMessage>
-            ))}
+            {messages.map((message) => {
+              const resources = message.parts.filter(
+                (part) => part.type === "source-url"
+              );
+
+              return (
+                <AIMessage from={message.role} key={message.id}>
+                  {message.parts.map((part, index) =>
+                    part.type === "text" ? (
+                      <AIMessageContent key={index}>
+                        <AIResponse>{part.text}</AIResponse>
+                      </AIMessageContent>
+                    ) : null
+                  )}
+
+                  {resources.length > 0 && (
+                    <div className="flex w-full flex-col gap-2">
+                      {resources.map((part, index) => {
+                        const faviconUrl = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(
+                          part.url
+                        )}`;
+
+                        return (
+                          <Link
+                            key={index}
+                            href={part.url}
+                            target="_blank"
+                            className="text-blue-500 hover:underline text-xs"
+                          >
+                            <img
+                              src={faviconUrl}
+                              alt={part.title || "Resource"}
+                              width={16}
+                              height={16}
+                              className="flex-shrink-0"
+                            />
+                            {part.title}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </AIMessage>
+              );
+            })}
             <AIResponseLoading status={status} text="loading" />
             <AIResponseError error={error} reload={regenerate} />
           </AIConversationContent>
@@ -78,7 +113,7 @@ const ChatPage = () => {
           }}
         />
       </ResizablePanel>
-      <ResizableHandle withHandle className="mx-1" />
+      <ResizableHandle withHandle />
       <ResizablePanel className="min-w-96 h-full max-h-svw overflow-hidden">
         <AppPageHeader />
         <div className="inset-0 flex items-center justify-center h-full">

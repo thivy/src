@@ -6,7 +6,7 @@ import {
   MessageDeltaTextContent,
   MessageStreamEvent,
   RunStreamEvent,
-  ThreadRun,
+  ToolUtility,
 } from "@azure/ai-agents";
 import { DefaultAzureCredential } from "@azure/identity";
 import {
@@ -40,9 +40,20 @@ export const createAgentUIMessageStreamResponse = (
       const message = convertToAgentMessage(userMessage);
 
       await client.messages.create(thread.id, "user", message);
+      const bingTool = ToolUtility.createBingGroundingTool([
+        {
+          connectionId: process.env.AZURE_AI_FOUNDRY_BING_CONNECTION_ID!,
+        },
+      ]);
 
       const streamEventMessages = await client.runs
-        .create(thread.id, agentId)
+        .create(thread.id, agentId, {
+          tools: [
+            {
+              ...bingTool.definition,
+            },
+          ],
+        })
         .stream();
 
       for await (const eventMessage of streamEventMessages) {
@@ -61,86 +72,34 @@ export const createAgentUIMessageStreamResponse = (
             break;
           case RunStreamEvent.ThreadRunRequiresAction:
             {
-              const data = eventMessage.data as ThreadRun;
-              writer.write({
-                type: "data-thread-run-requires-action",
-                data: {
-                  id: data.id,
-                  status: data.status,
-                },
-              });
             }
             break;
           case RunStreamEvent.ThreadRunCompleted:
             {
-              const data = eventMessage.data as ThreadRun;
-              writer.write({
-                type: "data-thread-run-completed",
-                data: {
-                  id: data.id,
-                  status: data.status,
-                },
-              });
             }
             break;
           case RunStreamEvent.ThreadRunIncomplete:
             {
-              const data = eventMessage.data as ThreadRun;
-              writer.write({
-                type: "data-thread-run-incomplete",
-                data: {
-                  id: data.id,
-                  status: data.status,
-                },
-              });
             }
             break;
           case RunStreamEvent.ThreadRunFailed:
             {
-              const threadRun = eventMessage.data as ThreadRun;
-              writer.write({
-                type: "data-thread-run-failed",
-                data: {
-                  id: threadRun.id,
-                  status: threadRun.status,
-                },
-              });
+              console.error(
+                "Error event received in createAgentUIMessageStreamResponse",
+                eventMessage.data
+              );
             }
             break;
           case RunStreamEvent.ThreadRunCancelling:
             {
-              const threadRun = eventMessage.data as ThreadRun;
-              writer.write({
-                type: "data-thread-run-cancelling",
-                data: {
-                  id: threadRun.id,
-                  status: threadRun.status,
-                },
-              });
             }
             break;
           case RunStreamEvent.ThreadRunCancelled:
             {
-              const threadRun = eventMessage.data as ThreadRun;
-              writer.write({
-                type: "data-thread-run-cancelled",
-                data: {
-                  id: threadRun.id,
-                  status: threadRun.status,
-                },
-              });
             }
             break;
           case RunStreamEvent.ThreadRunExpired:
             {
-              const threadRun = eventMessage.data as ThreadRun;
-              writer.write({
-                type: "data-thread-run-expired",
-                data: {
-                  id: threadRun.id,
-                  status: threadRun.status,
-                },
-              });
             }
             break;
 
@@ -170,10 +129,38 @@ export const createAgentUIMessageStreamResponse = (
           case MessageStreamEvent.ThreadMessageDelta:
             {
               const messageDelta = eventMessage.data as MessageDeltaChunk;
+
               messageDelta.delta.content.forEach((contentPart) => {
                 if (contentPart.type === "text") {
                   const textContent = contentPart as MessageDeltaTextContent;
-                  const textValue = textContent.text?.value || "No text";
+                  let textValue = textContent.text?.value || "No text";
+                  const annotations = textContent.text?.annotations || [];
+                  console.log(textValue);
+                  if (annotations.length > 0) {
+                    annotations.forEach((annotation) => {
+                      if (annotation && annotation.type === "url_citation") {
+                        console.log(annotation);
+                        const urlAnnotation = annotation as unknown as {
+                          index: number;
+                          text: string;
+                          url_citation: { url: string; title: string };
+                        };
+
+                        textValue = textValue.replace(
+                          urlAnnotation.text,
+                          `[${urlAnnotation.text}](custom-annotation://${urlAnnotation.index})`
+                        );
+
+                        writer.write({
+                          type: "source-url",
+                          url: urlAnnotation.url_citation.url,
+                          title: urlAnnotation.url_citation.title,
+                          sourceId: urlAnnotation.index.toString(),
+                        });
+                      }
+                    });
+                  }
+
                   writer.write({
                     type: "text-delta",
                     delta: textValue,
@@ -201,12 +188,17 @@ export const createAgentUIMessageStreamResponse = (
             break;
 
           /** Terminal event indicating a server side error while streaming. */
-          case ErrorEvent.Error:
+          case ErrorEvent.Error: {
             writer.write({
               type: "error",
               errorText: `${eventMessage.data}`,
             });
+            console.error(
+              "Error event received in createAgentUIMessageStreamResponse",
+              eventMessage.data
+            );
             break;
+          }
           /** Terminal event indicating the successful end of a stream. */
           case DoneEvent.Done:
             writer.write({
