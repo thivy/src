@@ -4,7 +4,7 @@ import { cn } from "@/components/lib/utils";
 import type { PropsWithChildren } from "react";
 import { memo } from "react";
 import { Button } from "../button";
-import { MarkdocMarkdown } from "../markdown/markdoc";
+import { Markdown } from "../markdown/markdown";
 import { ShimmeringText, ShimmeringTextProps } from "../shimmering";
 import { AIMessage } from "./message";
 
@@ -18,7 +18,7 @@ export const AIResponse = memo(
       )}
       {...props}
     >
-      <MarkdocMarkdown content={children as string} />
+      <Markdown content={children as string} />
     </div>
   ),
   (prevProps, nextProps) => prevProps.children === nextProps.children

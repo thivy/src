@@ -145,8 +145,8 @@ export type CodeBlockProps = HTMLAttributes<HTMLDivElement> & {
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;
-  code: string;
   language: string;
+  filename: string;
 };
 
 export const CodeBlock = ({ className, ...props }: CodeBlockProps) => {
