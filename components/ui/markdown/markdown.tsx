@@ -13,12 +13,15 @@ interface Props {
   content: string;
 }
 
+import remarkDirective from "remark-directive";
+import { remarkAnnotation } from "./annotation";
+
 export const Markdown: FC<Props> = (props) => {
   return (
     <ReactMarkdown
       components={components}
       rehypePlugins={[rehypeKatex]}
-      remarkPlugins={[remarkGfm, remarkMath]}
+      remarkPlugins={[remarkGfm, remarkMath, remarkAnnotation, remarkDirective]}
     >
       {props.content}
     </ReactMarkdown>

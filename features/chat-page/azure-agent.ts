@@ -146,7 +146,11 @@ export const createAgentUIMessageStreamResponse = (
 
                         textValue = textValue.replace(
                           urlAnnotation.text,
-                          `[${urlAnnotation.text}](custom-annotation://${urlAnnotation.index})`
+                          `:annotation[${
+                            urlAnnotation.url_citation.title
+                          }]{url="${urlAnnotation.url_citation.url}" index="${
+                            urlAnnotation.index + 1
+                          }"}`
                         );
 
                         writer.write({

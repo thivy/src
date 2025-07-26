@@ -3,6 +3,7 @@
 import { cn } from "@/components/lib/utils";
 import { HTMLAttributes } from "react";
 import { Options } from "react-markdown";
+import { Annotation } from "../annotation";
 import {
   BundledLanguage,
   CodeBlock,
@@ -48,16 +49,30 @@ export const components: Options["components"] = {
       {children}
     </span>
   ),
-  a: ({ node, children, className, ...props }) => (
-    <a
-      className={cn("font-medium text-primary underline", className)}
-      rel="noreferrer"
-      target="_blank"
-      {...props}
-    >
-      {children}
-    </a>
-  ),
+  a: ({ node, children, className, ...props }) => {
+    const url = props["data-url" as keyof typeof props];
+    const index = props["data-index" as keyof typeof props];
+    const type = props["data-type" as keyof typeof props];
+
+    if (node && type === "annotation") {
+      return (
+        <Annotation href={url} title={children as string}>
+          {index}
+        </Annotation>
+      );
+    }
+
+    return (
+      <a
+        className={cn("font-medium underline", className)}
+        rel="noreferrer"
+        target="_blank"
+        {...props}
+      >
+        {children}
+      </a>
+    );
+  },
   h1: ({ node, children, className, ...props }) => (
     <h1
       className={cn("mt-6 mb-2 font-semibold text-3xl", className)}
