@@ -11,6 +11,7 @@ import {
   AIResponseError,
   AIResponseLoading,
 } from "@/components/ui/ai/response";
+import { AISources } from "@/components/ui/ai/source";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -18,7 +19,6 @@ import {
 } from "@/components/ui/resizable";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import Link from "next/link";
 import { useState } from "react";
 import { AppPageHeader } from "../root/app-layout";
 import ChatInput from "./chat-input";
@@ -54,9 +54,12 @@ const ChatPage = () => {
           <AIConversationContent className="@container pb-[120px] ">
             <AppPageHeader />
             {messages.map((message) => {
-              const resources = message.parts.filter(
-                (part) => part.type === "source-url"
-              );
+              const resources = message.parts
+                .filter((part) => part.type === "source-url")
+                .map((part) => ({
+                  url: part.url,
+                  title: part.title,
+                }));
 
               return (
                 <AIMessage from={message.role} key={message.id}>
@@ -67,34 +70,9 @@ const ChatPage = () => {
                       </AIMessageContent>
                     ) : null
                   )}
-
-                  {resources.length > 0 && (
-                    <div className="flex w-full flex-col gap-2">
-                      {resources.map((part, index) => {
-                        const faviconUrl = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(
-                          part.url
-                        )}`;
-
-                        return (
-                          <Link
-                            key={index}
-                            href={part.url}
-                            target="_blank"
-                            className="text-blue-500 hover:underline text-xs"
-                          >
-                            <img
-                              src={faviconUrl}
-                              alt={part.title || "Resource"}
-                              width={16}
-                              height={16}
-                              className="flex-shrink-0"
-                            />
-                            {part.title}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
+                  <div className="flex gap-2 items-start">
+                    <AISources sources={resources} />
+                  </div>
                 </AIMessage>
               );
             })}
