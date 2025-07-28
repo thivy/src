@@ -13,15 +13,20 @@ export type AIConversationProps = ComponentProps<typeof StickToBottom>;
 export const AIConversation = ({
   className,
   ...props
-}: AIConversationProps) => (
-  <StickToBottom
-    className={cn("relative flex-1 overflow-hidden", className)}
-    initial="smooth"
-    resize="smooth"
-    role="log"
-    {...props}
-  />
-);
+}: AIConversationProps) => {
+  return (
+    <StickToBottom
+      className={cn(
+        "relative flex-1 overflow-hidden [&>*:first-child]:[scrollbar-gutter:stable_both-edges]",
+        className
+      )}
+      initial="smooth"
+      resize="smooth"
+      role="log"
+      {...props}
+    />
+  );
+};
 
 export type AIConversationContentProps = ComponentProps<
   typeof StickToBottom.Content

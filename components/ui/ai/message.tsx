@@ -9,7 +9,7 @@ export type AIMessageProps = HTMLAttributes<HTMLDivElement> & {
 export const AIMessage = ({ className, from, ...props }: AIMessageProps) => (
   <div
     className={cn(
-      "group flex flex-col w-full gap-2 py-5 container max-w-3xl mx-auto [scrollbar-gutter:stable_both-edges] overflow-y-auto",
+      "group flex flex-col w-full gap-2 py-5 container max-w-3xl mx-auto break-words",
       from === "user" ? "is-user  items-end justify-end" : "",
       from === "assistant" ? "is-assistant" : "",
       "",
