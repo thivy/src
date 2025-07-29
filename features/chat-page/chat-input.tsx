@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/ai/input";
 import { Image02Icon, Mic02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ChatStatus } from "ai";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { useChatStoreContext } from "./chat-context";
 
 const models = [
   { id: "gpt-4", name: "GPT-4" },
@@ -29,25 +29,25 @@ const models = [
   { id: "mistral-7b", name: "Mistral 7B" },
 ];
 
-type Props = {
-  onSubmit: FormEventHandler<HTMLFormElement>;
-  value: string;
-  onChange: ChangeEventHandler<HTMLTextAreaElement>;
-  status: ChatStatus;
-};
+const ChatInput = () => {
+  const { input, setInput, sendMessage, status } = useChatStoreContext();
 
-const ChatInput = (props: Props) => {
-  const valueIsEmpty = props.value.trim() === "";
-  const submitDisabled = valueIsEmpty || props.status === "submitted";
-  const canSendMessage = !submitDisabled && props.status !== "streaming";
+  const valueIsEmpty = input.trim() === "";
+  const submitDisabled = valueIsEmpty || status === "submitted";
+  const canSendMessage = !submitDisabled && status !== "streaming";
+  const [model, setModel] = useState<string>(models[0].id);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     if (canSendMessage) {
-      props.onSubmit(event);
+      sendMessage({ text: input });
+      setInput("");
     }
   };
-  const [model, setModel] = useState<string>(models[0].id);
+
+  const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+    setInput(event.target.value);
+  };
 
   return (
     <div className="pb-2 overflow-y-auto [scrollbar-gutter:stable_both-edges]">
@@ -55,8 +55,8 @@ const ChatInput = (props: Props) => {
         <AIInput onSubmit={handleSubmit}>
           <AIInputTextarea
             canSubmit={canSendMessage}
-            onChange={props.onChange}
-            value={props.value}
+            onChange={handleChange}
+            value={input}
             placeholder="Ask anything"
           />
           <AIInputToolbar>
@@ -81,7 +81,7 @@ const ChatInput = (props: Props) => {
               <AIInputButton>
                 <HugeiconsIcon strokeWidth={1.5} icon={Mic02Icon} />
               </AIInputButton>
-              <AIInputSubmit disabled={submitDisabled} status={props.status} />
+              <AIInputSubmit disabled={submitDisabled} status={status} />
             </AIInputTools>
           </AIInputToolbar>
         </AIInput>
